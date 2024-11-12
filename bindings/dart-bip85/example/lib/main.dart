@@ -11,13 +11,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var mnemonic = toMnemonic(
+      xpriv:
+          "xprv9s21ZrQH143K2LBWUUQRFXhucrQqBpKdRRxNVq2zBqsx8HVqFk2uYo8kmbaLLHRdqtQpUm98uKfu3vca1LqdGhUtyoFnCNkfmXRyPXLjbKb",
+      wordCount: 12,
+      index: 0,
+    );
+
+    print("bip85: $mnemonic");
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text('flutter_rust_bridge quickstart')),
-        body: Center(
-          child: Text(
-              'Action: Call Rust `greet("Tom")`\nResult: `${greet(name: "Tom")}`'),
-        ),
+        body: Center(child: Text(mnemonic)),
       ),
     );
   }
