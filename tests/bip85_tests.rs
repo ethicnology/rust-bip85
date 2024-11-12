@@ -1,3 +1,5 @@
+use ::bip85::error::Error;
+
 #[cfg(feature = "mnemonic")]
 use bip39::Mnemonic;
 use bip85::*;
