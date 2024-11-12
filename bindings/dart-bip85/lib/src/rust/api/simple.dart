@@ -6,5 +6,18 @@
 import '../frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
-String greet({required String name}) =>
-    RustLib.instance.api.crateApiSimpleGreet(name: name);
+String toWif({required String xpriv, required int index}) =>
+    RustLib.instance.api.crateApiSimpleToWif(xpriv: xpriv, index: index);
+
+String toXprv({required String xpriv, required int index}) =>
+    RustLib.instance.api.crateApiSimpleToXprv(xpriv: xpriv, index: index);
+
+String toHex(
+        {required String xpriv, required int length, required int index}) =>
+    RustLib.instance.api
+        .crateApiSimpleToHex(xpriv: xpriv, length: length, index: index);
+
+String toMnemonic(
+        {required String xpriv, required int wordCount, required int index}) =>
+    RustLib.instance.api.crateApiSimpleToMnemonic(
+        xpriv: xpriv, wordCount: wordCount, index: index);

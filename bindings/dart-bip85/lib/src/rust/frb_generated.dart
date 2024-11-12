@@ -56,9 +56,7 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
       RustLibWire.fromExternalLibrary;
 
   @override
-  Future<void> executeRustInitializers() async {
-    await api.crateApiSimpleInitApp();
-  }
+  Future<void> executeRustInitializers() async {}
 
   @override
   ExternalLibraryLoaderConfig get defaultExternalLibraryLoaderConfig =>
@@ -68,7 +66,7 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
   String get codegenVersion => '2.5.0';
 
   @override
-  int get rustContentHash => -1918914929;
+  int get rustContentHash => 569239770;
 
   static const kDefaultExternalLibraryLoaderConfig =
       ExternalLibraryLoaderConfig(
@@ -79,9 +77,15 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
 }
 
 abstract class RustLibApi extends BaseApi {
-  String crateApiSimpleGreet({required String name});
+  String crateApiSimpleToHex(
+      {required String xpriv, required int length, required int index});
 
-  Future<void> crateApiSimpleInitApp();
+  String crateApiSimpleToMnemonic(
+      {required String xpriv, required int wordCount, required int index});
+
+  String crateApiSimpleToWif({required String xpriv, required int index});
+
+  String crateApiSimpleToXprv({required String xpriv, required int index});
 }
 
 class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
@@ -93,49 +97,103 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   });
 
   @override
-  String crateApiSimpleGreet({required String name}) {
+  String crateApiSimpleToHex(
+      {required String xpriv, required int length, required int index}) {
     return handler.executeSync(SyncTask(
       callFfi: () {
         final serializer = SseSerializer(generalizedFrbRustBinding);
-        sse_encode_String(name, serializer);
+        sse_encode_String(xpriv, serializer);
+        sse_encode_u_32(length, serializer);
+        sse_encode_u_32(index, serializer);
         return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 1)!;
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_String,
         decodeErrorData: null,
       ),
-      constMeta: kCrateApiSimpleGreetConstMeta,
-      argValues: [name],
+      constMeta: kCrateApiSimpleToHexConstMeta,
+      argValues: [xpriv, length, index],
       apiImpl: this,
     ));
   }
 
-  TaskConstMeta get kCrateApiSimpleGreetConstMeta => const TaskConstMeta(
-        debugName: "greet",
-        argNames: ["name"],
+  TaskConstMeta get kCrateApiSimpleToHexConstMeta => const TaskConstMeta(
+        debugName: "to_hex",
+        argNames: ["xpriv", "length", "index"],
       );
 
   @override
-  Future<void> crateApiSimpleInitApp() {
-    return handler.executeNormal(NormalTask(
-      callFfi: (port_) {
+  String crateApiSimpleToMnemonic(
+      {required String xpriv, required int wordCount, required int index}) {
+    return handler.executeSync(SyncTask(
+      callFfi: () {
         final serializer = SseSerializer(generalizedFrbRustBinding);
-        pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 2, port: port_);
+        sse_encode_String(xpriv, serializer);
+        sse_encode_u_32(wordCount, serializer);
+        sse_encode_u_32(index, serializer);
+        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 2)!;
       },
       codec: SseCodec(
-        decodeSuccessData: sse_decode_unit,
+        decodeSuccessData: sse_decode_String,
         decodeErrorData: null,
       ),
-      constMeta: kCrateApiSimpleInitAppConstMeta,
-      argValues: [],
+      constMeta: kCrateApiSimpleToMnemonicConstMeta,
+      argValues: [xpriv, wordCount, index],
       apiImpl: this,
     ));
   }
 
-  TaskConstMeta get kCrateApiSimpleInitAppConstMeta => const TaskConstMeta(
-        debugName: "init_app",
-        argNames: [],
+  TaskConstMeta get kCrateApiSimpleToMnemonicConstMeta => const TaskConstMeta(
+        debugName: "to_mnemonic",
+        argNames: ["xpriv", "wordCount", "index"],
+      );
+
+  @override
+  String crateApiSimpleToWif({required String xpriv, required int index}) {
+    return handler.executeSync(SyncTask(
+      callFfi: () {
+        final serializer = SseSerializer(generalizedFrbRustBinding);
+        sse_encode_String(xpriv, serializer);
+        sse_encode_u_32(index, serializer);
+        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 3)!;
+      },
+      codec: SseCodec(
+        decodeSuccessData: sse_decode_String,
+        decodeErrorData: null,
+      ),
+      constMeta: kCrateApiSimpleToWifConstMeta,
+      argValues: [xpriv, index],
+      apiImpl: this,
+    ));
+  }
+
+  TaskConstMeta get kCrateApiSimpleToWifConstMeta => const TaskConstMeta(
+        debugName: "to_wif",
+        argNames: ["xpriv", "index"],
+      );
+
+  @override
+  String crateApiSimpleToXprv({required String xpriv, required int index}) {
+    return handler.executeSync(SyncTask(
+      callFfi: () {
+        final serializer = SseSerializer(generalizedFrbRustBinding);
+        sse_encode_String(xpriv, serializer);
+        sse_encode_u_32(index, serializer);
+        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 4)!;
+      },
+      codec: SseCodec(
+        decodeSuccessData: sse_decode_String,
+        decodeErrorData: null,
+      ),
+      constMeta: kCrateApiSimpleToXprvConstMeta,
+      argValues: [xpriv, index],
+      apiImpl: this,
+    ));
+  }
+
+  TaskConstMeta get kCrateApiSimpleToXprvConstMeta => const TaskConstMeta(
+        debugName: "to_xprv",
+        argNames: ["xpriv", "index"],
       );
 
   @protected
@@ -148,6 +206,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   Uint8List dco_decode_list_prim_u_8_strict(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return raw as Uint8List;
+  }
+
+  @protected
+  int dco_decode_u_32(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return raw as int;
   }
 
   @protected
@@ -174,6 +238,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     // Codec=Sse (Serialization based), see doc to use other codecs
     var len_ = sse_decode_i_32(deserializer);
     return deserializer.buffer.getUint8List(len_);
+  }
+
+  @protected
+  int sse_decode_u_32(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return deserializer.buffer.getUint32();
   }
 
   @protected
@@ -211,6 +281,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_i_32(self.length, serializer);
     serializer.buffer.putUint8List(self);
+  }
+
+  @protected
+  void sse_encode_u_32(int self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    serializer.buffer.putUint32(self);
   }
 
   @protected

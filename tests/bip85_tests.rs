@@ -1,12 +1,12 @@
-use ::bip85::error::Error;
+use ::my_bip85::error::Error;
 
 #[cfg(feature = "mnemonic")]
 use bip39::Mnemonic;
-use bip85::*;
 use bitcoin::bip32::DerivationPath;
 use bitcoin::bip32::Xpriv;
 use bitcoin::secp256k1::Secp256k1;
 use bitcoin::PrivateKey;
+use my_bip85::*;
 use std::str::FromStr;
 
 // test vectors from https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki
@@ -71,6 +71,7 @@ fn test_xprv() {
     let secp = Secp256k1::new();
 
     let derived = to_xprv(&secp, &root, 0).unwrap();
+
     let expected = Xpriv::from_str(
         "xprv9s21ZrQH143K2srSbCSg4m4kLvPMzcWydgmKEnMmoZUurYuBuYG46c6P71UG\
              XMzmriLzCCBvKQWBUv3vPB3m1SATMhp3uEjXHJ42jFg7myX",
