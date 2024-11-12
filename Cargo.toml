@@ -1,12 +1,15 @@
 [package]
 name = "bip85"
 version = "0.1.1"
-authors = ["Rita Kitic <rikitau@protonmail.com>"]
+authors = [
+    "Rita Kitic <rikitau@protonmail.com>",
+    "Azad EMERY <ethicnology@pm.me>",
+]
 description = "BIP-85 - deterministic entropy from bip32 keychains"
-repository = "https://github.com/rikitau/rust-bip85"
+repository = "https://github.com/ethicnology/rust-bip85"
 readme = "README.md"
 license = "MIT"
-edition = "2018"
+edition = "2021"
 
 [features]
 default = ["mnemonic"]
@@ -30,14 +33,13 @@ all-languages = [
     "italian",
     "japanese",
     "korean",
-    "spanish"
+    "spanish",
 ]
 
 [dependencies]
-bitcoin = "0.26.0"
-bip39 = { version = "1.0.1", optional = true }
+bitcoin = "0.32.4"
+bip39 = { version = "2.1.0", optional = true }
 
 [[example]]
 name = "mnemonic"
 required-features = ["japanese"]
-
