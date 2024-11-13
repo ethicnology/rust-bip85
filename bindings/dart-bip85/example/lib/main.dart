@@ -11,20 +11,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const xpriv =
+    const xprv =
         "xprv9s21ZrQH143K2LBWUUQRFXhucrQqBpKdRRxNVq2zBqsx8HVqFk2uYo8kmbaLLHRdqtQpUm98uKfu3vca1LqdGhUtyoFnCNkfmXRyPXLjbKb";
-
-    var mnemonic = bip85.toMnemonic(
-      xpriv: xpriv,
-      wordCount: 12,
-      index: 0,
-    );
-
-    print("bip85: $mnemonic");
+    final mnemonic = bip85.toMnemonic(xprv: xprv, wordCount: 12, index: 0);
+    assert(mnemonic ==
+        "girl mad pet galaxy egg matter matrix prison refuse sense ordinary nose");
 
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: const Text('flutter_rust_bridge quickstart')),
+        appBar: AppBar(title: const Text('flutter_rust_bridge bip85')),
         body: Center(child: Text(mnemonic)),
       ),
     );
