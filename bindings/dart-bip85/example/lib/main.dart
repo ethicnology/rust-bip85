@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:bip85/bip85.dart';
+import 'package:bip85/bip85.dart' as bip85;
 
 Future<void> main() async {
-  await RustLib.init();
+  await bip85.RustLib.init(); // mandatory
   runApp(const MyApp());
 }
 
@@ -11,9 +11,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var mnemonic = toMnemonic(
-      xpriv:
-          "xprv9s21ZrQH143K2LBWUUQRFXhucrQqBpKdRRxNVq2zBqsx8HVqFk2uYo8kmbaLLHRdqtQpUm98uKfu3vca1LqdGhUtyoFnCNkfmXRyPXLjbKb",
+    const xpriv =
+        "xprv9s21ZrQH143K2LBWUUQRFXhucrQqBpKdRRxNVq2zBqsx8HVqFk2uYo8kmbaLLHRdqtQpUm98uKfu3vca1LqdGhUtyoFnCNkfmXRyPXLjbKb";
+
+    var mnemonic = bip85.toMnemonic(
+      xpriv: xpriv,
       wordCount: 12,
       index: 0,
     );

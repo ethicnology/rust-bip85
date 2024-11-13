@@ -1,4 +1,4 @@
-use ::my_bip85::error::Error;
+use ::bip85_fork::error::Error;
 
 #[cfg(feature = "mnemonic")]
 use bip39::Mnemonic;
@@ -6,7 +6,7 @@ use bitcoin::bip32::DerivationPath;
 use bitcoin::bip32::Xpriv;
 use bitcoin::secp256k1::Secp256k1;
 use bitcoin::PrivateKey;
-use my_bip85::*;
+use bip85_fork::*;
 use std::str::FromStr;
 
 // test vectors from https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki

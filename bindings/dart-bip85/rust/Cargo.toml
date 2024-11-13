@@ -7,6 +7,6 @@ edition = "2021"
 crate-type = ["cdylib", "staticlib"]
 
 [dependencies]
-flutter_rust_bridge = "=2.5.0"
-my_bip85 = { path = "../../../" }
+bip85_fork = { path = "../../../" }
+flutter_rust_bridge = "=2.6.0"
 hex = "0.4.3"

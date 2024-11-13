@@ -1,4 +1,4 @@
-extern crate my_bip85;
+extern crate bip85_fork;
 
 use std::str::FromStr;
 

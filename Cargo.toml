@@ -1,5 +1,5 @@
 [package]
-name = "my_bip85"
+name = "bip85_fork"
 version = "0.1.1"
 authors = [
     "Rita Kitic <rikitau@protonmail.com>",
