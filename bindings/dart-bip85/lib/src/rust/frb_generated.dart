@@ -66,7 +66,7 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
   String get codegenVersion => '2.6.0';
 
   @override
-  int get rustContentHash => -1622176290;
+  int get rustContentHash => -1756544811;
 
   static const kDefaultExternalLibraryLoaderConfig =
       ExternalLibraryLoaderConfig(
@@ -77,15 +77,17 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
 }
 
 abstract class RustLibApi extends BaseApi {
+  Uint8List crateApiBip85Derive({required String xprv, required String path});
+
   String crateApiBip85ToHex(
-      {required String xpriv, required int length, required int index});
+      {required String xprv, required int length, required int index});
 
   String crateApiBip85ToMnemonic(
-      {required String xpriv, required int wordCount, required int index});
+      {required String xprv, required int wordCount, required int index});
 
-  String crateApiBip85ToWif({required String xpriv, required int index});
+  String crateApiBip85ToWif({required String xprv, required int index});
 
-  String crateApiBip85ToXprv({required String xpriv, required int index});
+  String crateApiBip85ToXprv({required String xprv, required int index});
 }
 
 class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
@@ -97,39 +99,37 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   });
 
   @override
-  String crateApiBip85ToHex(
-      {required String xpriv, required int length, required int index}) {
+  Uint8List crateApiBip85Derive({required String xprv, required String path}) {
     return handler.executeSync(SyncTask(
       callFfi: () {
         final serializer = SseSerializer(generalizedFrbRustBinding);
-        sse_encode_String(xpriv, serializer);
-        sse_encode_u_32(length, serializer);
-        sse_encode_u_32(index, serializer);
+        sse_encode_String(xprv, serializer);
+        sse_encode_String(path, serializer);
         return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 1)!;
       },
       codec: SseCodec(
-        decodeSuccessData: sse_decode_String,
+        decodeSuccessData: sse_decode_list_prim_u_8_strict,
         decodeErrorData: null,
       ),
-      constMeta: kCrateApiBip85ToHexConstMeta,
-      argValues: [xpriv, length, index],
+      constMeta: kCrateApiBip85DeriveConstMeta,
+      argValues: [xprv, path],
       apiImpl: this,
     ));
   }
 
-  TaskConstMeta get kCrateApiBip85ToHexConstMeta => const TaskConstMeta(
-        debugName: "to_hex",
-        argNames: ["xpriv", "length", "index"],
+  TaskConstMeta get kCrateApiBip85DeriveConstMeta => const TaskConstMeta(
+        debugName: "derive",
+        argNames: ["xprv", "path"],
       );
 
   @override
-  String crateApiBip85ToMnemonic(
-      {required String xpriv, required int wordCount, required int index}) {
+  String crateApiBip85ToHex(
+      {required String xprv, required int length, required int index}) {
     return handler.executeSync(SyncTask(
       callFfi: () {
         final serializer = SseSerializer(generalizedFrbRustBinding);
-        sse_encode_String(xpriv, serializer);
-        sse_encode_u_32(wordCount, serializer);
+        sse_encode_String(xprv, serializer);
+        sse_encode_u_32(length, serializer);
         sse_encode_u_32(index, serializer);
         return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 2)!;
       },
@@ -137,23 +137,25 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         decodeSuccessData: sse_decode_String,
         decodeErrorData: null,
       ),
-      constMeta: kCrateApiBip85ToMnemonicConstMeta,
-      argValues: [xpriv, wordCount, index],
+      constMeta: kCrateApiBip85ToHexConstMeta,
+      argValues: [xprv, length, index],
       apiImpl: this,
     ));
   }
 
-  TaskConstMeta get kCrateApiBip85ToMnemonicConstMeta => const TaskConstMeta(
-        debugName: "to_mnemonic",
-        argNames: ["xpriv", "wordCount", "index"],
+  TaskConstMeta get kCrateApiBip85ToHexConstMeta => const TaskConstMeta(
+        debugName: "to_hex",
+        argNames: ["xprv", "length", "index"],
       );
 
   @override
-  String crateApiBip85ToWif({required String xpriv, required int index}) {
+  String crateApiBip85ToMnemonic(
+      {required String xprv, required int wordCount, required int index}) {
     return handler.executeSync(SyncTask(
       callFfi: () {
         final serializer = SseSerializer(generalizedFrbRustBinding);
-        sse_encode_String(xpriv, serializer);
+        sse_encode_String(xprv, serializer);
+        sse_encode_u_32(wordCount, serializer);
         sse_encode_u_32(index, serializer);
         return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 3)!;
       },
@@ -161,23 +163,23 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         decodeSuccessData: sse_decode_String,
         decodeErrorData: null,
       ),
-      constMeta: kCrateApiBip85ToWifConstMeta,
-      argValues: [xpriv, index],
+      constMeta: kCrateApiBip85ToMnemonicConstMeta,
+      argValues: [xprv, wordCount, index],
       apiImpl: this,
     ));
   }
 
-  TaskConstMeta get kCrateApiBip85ToWifConstMeta => const TaskConstMeta(
-        debugName: "to_wif",
-        argNames: ["xpriv", "index"],
+  TaskConstMeta get kCrateApiBip85ToMnemonicConstMeta => const TaskConstMeta(
+        debugName: "to_mnemonic",
+        argNames: ["xprv", "wordCount", "index"],
       );
 
   @override
-  String crateApiBip85ToXprv({required String xpriv, required int index}) {
+  String crateApiBip85ToWif({required String xprv, required int index}) {
     return handler.executeSync(SyncTask(
       callFfi: () {
         final serializer = SseSerializer(generalizedFrbRustBinding);
-        sse_encode_String(xpriv, serializer);
+        sse_encode_String(xprv, serializer);
         sse_encode_u_32(index, serializer);
         return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 4)!;
       },
@@ -185,15 +187,39 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         decodeSuccessData: sse_decode_String,
         decodeErrorData: null,
       ),
+      constMeta: kCrateApiBip85ToWifConstMeta,
+      argValues: [xprv, index],
+      apiImpl: this,
+    ));
+  }
+
+  TaskConstMeta get kCrateApiBip85ToWifConstMeta => const TaskConstMeta(
+        debugName: "to_wif",
+        argNames: ["xprv", "index"],
+      );
+
+  @override
+  String crateApiBip85ToXprv({required String xprv, required int index}) {
+    return handler.executeSync(SyncTask(
+      callFfi: () {
+        final serializer = SseSerializer(generalizedFrbRustBinding);
+        sse_encode_String(xprv, serializer);
+        sse_encode_u_32(index, serializer);
+        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 5)!;
+      },
+      codec: SseCodec(
+        decodeSuccessData: sse_decode_String,
+        decodeErrorData: null,
+      ),
       constMeta: kCrateApiBip85ToXprvConstMeta,
-      argValues: [xpriv, index],
+      argValues: [xprv, index],
       apiImpl: this,
     ));
   }
 
   TaskConstMeta get kCrateApiBip85ToXprvConstMeta => const TaskConstMeta(
         debugName: "to_xprv",
-        argNames: ["xpriv", "index"],
+        argNames: ["xprv", "index"],
       );
 
   @protected

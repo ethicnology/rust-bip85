@@ -37,7 +37,7 @@ flutter_rust_bridge::frb_generated_boilerplate!(
     default_rust_auto_opaque = RustAutoOpaqueMoi,
 );
 pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_VERSION: &str = "2.6.0";
-pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_CONTENT_HASH: i32 = -1622176290;
+pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_CONTENT_HASH: i32 = -1756544811;
 
 // Section: executor
 
@@ -45,6 +45,37 @@ flutter_rust_bridge::frb_generated_default_handler!();
 
 // Section: wire_funcs
 
+fn wire__crate__api__bip85__derive_impl(
+    ptr_: flutter_rust_bridge::for_generated::PlatformGeneralizedUint8ListPtr,
+    rust_vec_len_: i32,
+    data_len_: i32,
+) -> flutter_rust_bridge::for_generated::WireSyncRust2DartSse {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_sync::<flutter_rust_bridge::for_generated::SseCodec, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "derive",
+            port: None,
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Sync,
+        },
+        move || {
+            let message = unsafe {
+                flutter_rust_bridge::for_generated::Dart2RustMessageSse::from_wire(
+                    ptr_,
+                    rust_vec_len_,
+                    data_len_,
+                )
+            };
+            let mut deserializer =
+                flutter_rust_bridge::for_generated::SseDeserializer::new(message);
+            let api_xprv = <String>::sse_decode(&mut deserializer);
+            let api_path = <String>::sse_decode(&mut deserializer);
+            deserializer.end();
+            transform_result_sse::<_, ()>((move || {
+                let output_ok = Result::<_, ()>::Ok(crate::api::bip85::derive(api_xprv, api_path))?;
+                Ok(output_ok)
+            })())
+        },
+    )
+}
 fn wire__crate__api__bip85__to_hex_impl(
     ptr_: flutter_rust_bridge::for_generated::PlatformGeneralizedUint8ListPtr,
     rust_vec_len_: i32,
@@ -66,13 +97,13 @@ fn wire__crate__api__bip85__to_hex_impl(
             };
             let mut deserializer =
                 flutter_rust_bridge::for_generated::SseDeserializer::new(message);
-            let api_xpriv = <String>::sse_decode(&mut deserializer);
+            let api_xprv = <String>::sse_decode(&mut deserializer);
             let api_length = <u32>::sse_decode(&mut deserializer);
             let api_index = <u32>::sse_decode(&mut deserializer);
             deserializer.end();
             transform_result_sse::<_, ()>((move || {
                 let output_ok = Result::<_, ()>::Ok(crate::api::bip85::to_hex(
-                    api_xpriv, api_length, api_index,
+                    api_xprv, api_length, api_index,
                 ))?;
                 Ok(output_ok)
             })())
@@ -100,13 +131,13 @@ fn wire__crate__api__bip85__to_mnemonic_impl(
             };
             let mut deserializer =
                 flutter_rust_bridge::for_generated::SseDeserializer::new(message);
-            let api_xpriv = <String>::sse_decode(&mut deserializer);
+            let api_xprv = <String>::sse_decode(&mut deserializer);
             let api_word_count = <u32>::sse_decode(&mut deserializer);
             let api_index = <u32>::sse_decode(&mut deserializer);
             deserializer.end();
             transform_result_sse::<_, ()>((move || {
                 let output_ok = Result::<_, ()>::Ok(crate::api::bip85::to_mnemonic(
-                    api_xpriv,
+                    api_xprv,
                     api_word_count,
                     api_index,
                 ))?;
@@ -136,12 +167,12 @@ fn wire__crate__api__bip85__to_wif_impl(
             };
             let mut deserializer =
                 flutter_rust_bridge::for_generated::SseDeserializer::new(message);
-            let api_xpriv = <String>::sse_decode(&mut deserializer);
+            let api_xprv = <String>::sse_decode(&mut deserializer);
             let api_index = <u32>::sse_decode(&mut deserializer);
             deserializer.end();
             transform_result_sse::<_, ()>((move || {
                 let output_ok =
-                    Result::<_, ()>::Ok(crate::api::bip85::to_wif(api_xpriv, api_index))?;
+                    Result::<_, ()>::Ok(crate::api::bip85::to_wif(api_xprv, api_index))?;
                 Ok(output_ok)
             })())
         },
@@ -168,12 +199,12 @@ fn wire__crate__api__bip85__to_xprv_impl(
             };
             let mut deserializer =
                 flutter_rust_bridge::for_generated::SseDeserializer::new(message);
-            let api_xpriv = <String>::sse_decode(&mut deserializer);
+            let api_xprv = <String>::sse_decode(&mut deserializer);
             let api_index = <u32>::sse_decode(&mut deserializer);
             deserializer.end();
             transform_result_sse::<_, ()>((move || {
                 let output_ok =
-                    Result::<_, ()>::Ok(crate::api::bip85::to_xprv(api_xpriv, api_index))?;
+                    Result::<_, ()>::Ok(crate::api::bip85::to_xprv(api_xprv, api_index))?;
                 Ok(output_ok)
             })())
         },
@@ -256,10 +287,11 @@ fn pde_ffi_dispatcher_sync_impl(
 ) -> flutter_rust_bridge::for_generated::WireSyncRust2DartSse {
     // Codec=Pde (Serialization + dispatch), see doc to use other codecs
     match func_id {
-        1 => wire__crate__api__bip85__to_hex_impl(ptr, rust_vec_len, data_len),
-        2 => wire__crate__api__bip85__to_mnemonic_impl(ptr, rust_vec_len, data_len),
-        3 => wire__crate__api__bip85__to_wif_impl(ptr, rust_vec_len, data_len),
-        4 => wire__crate__api__bip85__to_xprv_impl(ptr, rust_vec_len, data_len),
+        1 => wire__crate__api__bip85__derive_impl(ptr, rust_vec_len, data_len),
+        2 => wire__crate__api__bip85__to_hex_impl(ptr, rust_vec_len, data_len),
+        3 => wire__crate__api__bip85__to_mnemonic_impl(ptr, rust_vec_len, data_len),
+        4 => wire__crate__api__bip85__to_wif_impl(ptr, rust_vec_len, data_len),
+        5 => wire__crate__api__bip85__to_xprv_impl(ptr, rust_vec_len, data_len),
         _ => unreachable!(),
     }
 }

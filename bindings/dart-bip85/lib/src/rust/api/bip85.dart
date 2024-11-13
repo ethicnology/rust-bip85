@@ -6,18 +6,20 @@
 import '../frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
-String toWif({required String xpriv, required int index}) =>
-    RustLib.instance.api.crateApiBip85ToWif(xpriv: xpriv, index: index);
+Uint8List derive({required String xprv, required String path}) =>
+    RustLib.instance.api.crateApiBip85Derive(xprv: xprv, path: path);
 
-String toXprv({required String xpriv, required int index}) =>
-    RustLib.instance.api.crateApiBip85ToXprv(xpriv: xpriv, index: index);
+String toWif({required String xprv, required int index}) =>
+    RustLib.instance.api.crateApiBip85ToWif(xprv: xprv, index: index);
 
-String toHex(
-        {required String xpriv, required int length, required int index}) =>
+String toXprv({required String xprv, required int index}) =>
+    RustLib.instance.api.crateApiBip85ToXprv(xprv: xprv, index: index);
+
+String toHex({required String xprv, required int length, required int index}) =>
     RustLib.instance.api
-        .crateApiBip85ToHex(xpriv: xpriv, length: length, index: index);
+        .crateApiBip85ToHex(xprv: xprv, length: length, index: index);
 
 String toMnemonic(
-        {required String xpriv, required int wordCount, required int index}) =>
+        {required String xprv, required int wordCount, required int index}) =>
     RustLib.instance.api.crateApiBip85ToMnemonic(
-        xpriv: xpriv, wordCount: wordCount, index: index);
+        xprv: xprv, wordCount: wordCount, index: index);
