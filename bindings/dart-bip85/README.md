@@ -1,14 +1,60 @@
 # bip85
 
-A new Flutter FFI plugin project.
+The [dart-bip85](https://github.com/ethicnology/rust-bip85-fork/tree/master/bindings/dart-bip85) package is a Flutter binding for the [rust-bip85-fork](https://github.com/ethicnology/rust-bip85-fork) which is an updated version of the original [rust-bip85](https://github.com/rikitau/rust-bip85). The original rust-bip85 has been unmaintained since April 2021.
 
-## Getting Started
+
+
+This work is sponsored by [Bull Bitcoin](https://bullbitcoin.com) [<img 
+    align="right"
+    src="https://github.com/ethicnology/rust-bip85-fork/blob/master/bindings/dart-bip85/bullbitcoin.png" 
+    width=100
+    title="Sponsor"
+    alt="Sponsor"
+/>](https://bullbitcoin.com)
+
+
+## Usage
+
+I recommend checking the `example/` folder which includes a working app at `example/lib/main.dart`  as well as integration tests in `example/integration_test/`.
+
+```dart
+import 'package:bip85/bip85.dart' as bip85;
+
+void main() async {
+  await bip85.RustLib.init() // mandatory before the start of your flutter app
+
+  const xprv =
+      "xprv9s21ZrQH143K2LBWUUQRFXhucrQqBpKdRRxNVq2zBqsx8HVqFk2uYo8kmbaLLHRdqtQpUm98uKfu3vca1LqdGhUtyoFnCNkfmXRyPXLjbKb";
+
+    final derived = bip85.toMnemonic(xprv: xprv, wordCount: 12, index: 0);
+    const expected =
+        "girl mad pet galaxy egg matter matrix prison refuse sense ordinary nose";
+    assert(derived == expected);
+
+    final derived = bip85.toWif(xprv: xprv, index: 0);
+    const expected = "Kzyv4uF39d4Jrw2W7UryTHwZr1zQVNk4dAFyqE6BuMrMh1Za7uhp";
+    assert(derived == expected);
+
+    final derived = bip85.toHex(xprv: xprv, length: 64, index: 0);
+    const expected =
+        "492db4698cf3b73a5a24998aa3e9d7fa96275d85724a91e71aa2d645442f878555d078fd1f1f67e368976f04137b1f7a0d19232136ca50c44614af72b5582a5c";
+    assert(derived == expected);
+
+    final derived = bip85.toXprv(xprv: xprv, index: 0);
+    const expected =
+        "xprv9s21ZrQH143K2srSbCSg4m4kLvPMzcWydgmKEnMmoZUurYuBuYG46c6P71UGXMzmriLzCCBvKQWBUv3vPB3m1SATMhp3uEjXHJ42jFg7myX";
+    assert(derived == expected);
+}
+```
+
+
+## flutter_rust_bridge documentation
 
 This project is a starting point for a Flutter
 [FFI plugin](https://flutter.dev/to/ffi-package),
 a specialized package that includes native code directly invoked with Dart FFI.
 
-## Project structure
+### Project structure
 
 This template uses the following structure:
 
@@ -21,7 +67,7 @@ This template uses the following structure:
 * platform folders (`android`, `ios`, `windows`, etc.): Contains the build files
   for building and bundling the native code library with the platform application.
 
-## Building and bundling native code
+### Building and bundling native code
 
 The `pubspec.yaml` specifies FFI plugins as follows:
 
@@ -68,14 +114,14 @@ The native build systems that are invoked by FFI (and method channel) plugins ar
   * See the documentation in linux/CMakeLists.txt.
   * See the documentation in windows/CMakeLists.txt.
 
-## Binding to native code
+### Binding to native code
 
 To use the native code, bindings in Dart are needed.
 To avoid writing these by hand, they are generated from the header file
 (`src/bip85.h`) by `package:ffigen`.
 Regenerate the bindings by running `dart run ffigen --config ffigen.yaml`.
 
-## Invoking native code
+### Invoking native code
 
 Very short-running native functions can be directly invoked from any isolate.
 For example, see `sum` in `lib/bip85.dart`.
@@ -83,10 +129,4 @@ For example, see `sum` in `lib/bip85.dart`.
 Longer-running functions should be invoked on a helper isolate to avoid
 dropping frames in Flutter applications.
 For example, see `sumAsync` in `lib/bip85.dart`.
-
-## Flutter help
-
-For help getting started with Flutter, view our
-[online documentation](https://docs.flutter.dev), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
 
