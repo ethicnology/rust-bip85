@@ -1,7 +1,8 @@
 name: bip85
-description: "A new Flutter FFI plugin project."
-version: 0.0.1
-homepage:
+description: "BIP85 bindings to rust-bip85-fork"
+version: 1.0.0
+homepage: https://github.com/ethicnology/rust-bip85-fork/tree/master/bindings/dart-bip85
+repository: https://github.com/ethicnology/rust-bip85-fork
 
 environment:
   sdk: ^3.5.4
