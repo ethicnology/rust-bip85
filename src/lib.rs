@@ -29,6 +29,7 @@ pub mod error;
 pub mod hex;
 pub mod mnemonic;
 pub mod pwd_base64;
+pub mod pwd_base85;
 pub mod wif;
 pub mod xprv;
 
@@ -37,6 +38,7 @@ pub use error::Error;
 pub use hex::*;
 pub use mnemonic::*;
 pub use pwd_base64::*;
+pub use pwd_base85::*;
 pub use wif::*;
 pub use xprv::*;
 

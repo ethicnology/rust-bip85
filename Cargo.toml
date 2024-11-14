@@ -41,6 +41,7 @@ bitcoin = "0.32.4"
 bip39 = { version = "2.1.0", optional = true }
 sha3 = "0.10.8"
 base64 = "0.22.1"
+base85 = "2.0.0"
 
 [[example]]
 name = "mnemonic"
