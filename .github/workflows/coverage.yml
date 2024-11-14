@@ -9,7 +9,6 @@ on:
 jobs:
   coverage:
     runs-on: ubuntu-latest
-    if: ${{ github.actor != 'dependabot[bot]' }}
     name: Coverage
     steps:
       - uses: actions/checkout@v4
@@ -17,16 +16,19 @@ jobs:
         with:
           toolchain: nightly
           components: llvm-tools-preview
+
       - name: Test
-        run: cargo test --features coverage
+        run: cargo test
         env:
           RUSTFLAGS: "-Cinstrument-coverage"
           RUSTDOCFLAGS: "-Cinstrument-coverage"
           LLVM_PROFILE_FILE: "${{ github.workspace }}/default_%m_%p.profraw"
+
       - name: Collect coverage
         run: |
           curl -sL https://github.com/mozilla/grcov/releases/download/v0.8.19/grcov-x86_64-unknown-linux-gnu.tar.bz2 | tar -xjf-
           ./grcov . --binary-path ./target/debug/deps/ -s . -t lcov --branch --ignore-not-existing --keep-only 'src/*' --ignore '**/tests.rs' -o coverage.lcov
+
       - name: Submit coverage
         uses: codecov/codecov-action@v4
         with:
