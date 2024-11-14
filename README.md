@@ -17,7 +17,7 @@ This work is sponsored by [Bull Bitcoin](https://bullbitcoin.com) [<img
 - [x] [XPRV](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#user-content-XPRV)
 - [x] [HEX](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#hex)
 - [x] [DRNG](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#bip85-drng)
-- [ ] [PWD base64](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#user-content-PWD_BASE64)
+- [x] [PWD base64](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#user-content-PWD_BASE64)
 - [ ] [PWD base85](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#user-content-PWD_BASE85)
 - [ ] [RSA](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#user-content-RSA)
 - [ ] [RSA GPG](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#user-content-RSA_GPG)
