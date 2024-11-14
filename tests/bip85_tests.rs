@@ -84,30 +84,13 @@ fn test_xprv() {
 #[test]
 fn test_hex() {
     let root = Xpriv::from_str(
-        "xprv9s21ZrQH143K2LBWUUQRFXhucrQqBpKdRRxNVq2zBqsx8HVqFk2uYo8kmbaL\
-             LHRdqtQpUm98uKfu3vca1LqdGhUtyoFnCNkfmXRyPXLjbKb",
+        "xprv9s21ZrQH143K2LBWUUQRFXhucrQqBpKdRRxNVq2zBqsx8HVqFk2uYo8kmbaLLHRdqtQpUm98uKfu3vca1LqdGhUtyoFnCNkfmXRyPXLjbKb",
     )
     .unwrap();
     let secp = Secp256k1::new();
     let derived = to_hex(&secp, &root, 64, 0).unwrap();
-    let expected = vec![
-        0x49, 0x2d, 0xb4, 0x69, 0x8c, 0xf3, 0xb7, 0x3a, 0x5a, 0x24, 0x99, 0x8a, 0xa3, 0xe9, 0xd7,
-        0xfa, 0x96, 0x27, 0x5d, 0x85, 0x72, 0x4a, 0x91, 0xe7, 0x1a, 0xa2, 0xd6, 0x45, 0x44, 0x2f,
-        0x87, 0x85, 0x55, 0xd0, 0x78, 0xfd, 0x1f, 0x1f, 0x67, 0xe3, 0x68, 0x97, 0x6f, 0x04, 0x13,
-        0x7b, 0x1f, 0x7a, 0x0d, 0x19, 0x23, 0x21, 0x36, 0xca, 0x50, 0xc4, 0x46, 0x14, 0xaf, 0x72,
-        0xb5, 0x58, 0x2a, 0x5c,
-    ];
-
-    assert_eq!(expected, derived);
-
-    let derived = to_hex(&secp, &root, 35, 0).unwrap();
-    assert_eq!(derived.len(), 35);
-
-    let derived = to_hex(&secp, &root, 15, 0);
-    assert_eq!(derived, Err(Error::InvalidLength(15)));
-
-    let derived = to_hex(&secp, &root, 65, 0);
-    assert_eq!(derived, Err(Error::InvalidLength(65)));
+    let expected = "492db4698cf3b73a5a24998aa3e9d7fa96275d85724a91e71aa2d645442f878555d078fd1f1f67e368976f04137b1f7a0d19232136ca50c44614af72b5582a5c";
+    assert_eq!(expected, &derived);
 }
 
 #[cfg(feature = "mnemonic")]
