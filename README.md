@@ -1,6 +1,6 @@
 # BIP-85 Deterministic Entropy From BIP32 Keychains
 
-[![codecov](https://codecov.io/gh/ethicnology/rust-bip85-fork/graph/badge.svg?token=2YN9UI47KT)](https://codecov.io/gh/ethicnology/rust-bip85-fork)
+[![codecov](https://codecov.io/gh/ethicnology/rust-bip85/graph/badge.svg?token=2YN9UI47KT)](https://codecov.io/gh/ethicnology/rust-bip85)
 
 Derives entropy from the extended private key according to [BIP-85](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki).
 
