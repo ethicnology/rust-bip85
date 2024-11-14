@@ -1,12 +1,12 @@
 # bip85
 
-The [dart-bip85](https://github.com/ethicnology/rust-bip85-fork/tree/master/bindings/dart-bip85) package is a Flutter binding for the [rust-bip85-fork](https://github.com/ethicnology/rust-bip85-fork) which is an updated version of the original [rust-bip85](https://github.com/rikitau/rust-bip85). The original rust-bip85 has been unmaintained since April 2021.
+The [dart-bip85](https://github.com/ethicnology/rust-bip85/tree/master/bindings/dart-bip85) package is a Flutter binding for the [rust-bip85](https://github.com/ethicnology/rust-bip85) which is an updated version of the original [rust-bip85](https://github.com/rikitau/rust-bip85). The original rust-bip85 has been unmaintained since April 2021.
 
 
 
 This work is sponsored by [Bull Bitcoin](https://bullbitcoin.com) [<img 
     align="right"
-    src="https://github.com/ethicnology/rust-bip85-fork/blob/master/bindings/dart-bip85/bullbitcoin.png" 
+    src="https://github.com/ethicnology/rust-bip85/blob/master/bindings/dart-bip85/bullbitcoin.png" 
     width=100
     title="Sponsor"
     alt="Sponsor"

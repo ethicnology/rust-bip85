@@ -1,10 +1,12 @@
 # BIP-85 Deterministic Entropy From BIP32 Keychains
 
+[![codecov](https://codecov.io/gh/ethicnology/rust-bip85/branch/main/graph/badge.svg?token=RNIA9IIRB6)](https://codecov.io/gh/ethicnology/rust-bip85)
+
 Derives entropy from the extended private key according to [BIP-85](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki).
 
 This work is sponsored by [Bull Bitcoin](https://bullbitcoin.com) [<img 
     align="right"
-    src="https://github.com/ethicnology/rust-bip85-fork/blob/master/bindings/dart-bip85/bullbitcoin.png" 
+    src="https://github.com/ethicnology/rust-bip85/blob/master/bindings/dart-bip85/bullbitcoin.png" 
     width=100
     title="Sponsor"
     alt="Sponsor"
