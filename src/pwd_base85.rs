@@ -11,7 +11,7 @@ pub fn to_pwd_base85<C: secp256k1::Signing>(
     length: u32,
     index: u32,
 ) -> Result<String, Error> {
-    const BIP85_PWD_B64_APPLICATION_NUMBER: ChildNumber = ChildNumber::Hardened { index: 707785 };
+    const PWD_BASE85_APPLICATION_NUMBER: ChildNumber = ChildNumber::Hardened { index: 707785 };
     if length < 10 || length > 80 {
         return Err(Error::InvalidLength(length));
     }
@@ -19,7 +19,7 @@ pub fn to_pwd_base85<C: secp256k1::Signing>(
         return Err(Error::InvalidIndex(index));
     }
     let path = DerivationPath::from(vec![
-        BIP85_PWD_B64_APPLICATION_NUMBER,
+        PWD_BASE85_APPLICATION_NUMBER,
         ChildNumber::from_hardened_idx(length).unwrap(),
         ChildNumber::from_hardened_idx(index).unwrap(),
     ]);

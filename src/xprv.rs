@@ -14,12 +14,12 @@ pub fn to_xprv<C: secp256k1::Signing>(
     root: &Xpriv,
     index: u32,
 ) -> Result<Xpriv, Error> {
-    const BIP85_BIP32_INDEX: ChildNumber = ChildNumber::Hardened { index: 32 };
+    const BIP32_APPLICATION_NUMBER: ChildNumber = ChildNumber::Hardened { index: 32 };
     if index >= 0x80000000 {
         return Err(Error::InvalidIndex(index));
     }
     let path = DerivationPath::from(vec![
-        BIP85_BIP32_INDEX,
+        BIP32_APPLICATION_NUMBER,
         ChildNumber::from_hardened_idx(index).unwrap(),
     ]);
     let data = crate::derive(secp, root, &path)?;

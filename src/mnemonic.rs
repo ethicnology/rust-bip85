@@ -27,7 +27,7 @@ pub fn to_mnemonic_in<C: secp256k1::Signing>(
     if index >= 0x80000000 {
         return Err(Error::InvalidIndex(index));
     }
-    const BIP85_BIP39_INDEX: ChildNumber = ChildNumber::Hardened { index: 39 };
+    const BIP39_APPLICATION_NUMBER: ChildNumber = ChildNumber::Hardened { index: 39 };
     let language_index = match lang {
         Language::English => 0,
         #[cfg(feature = "japanese")]
@@ -48,7 +48,7 @@ pub fn to_mnemonic_in<C: secp256k1::Signing>(
         Language::Czech => 8,
     };
     let path = DerivationPath::from(vec![
-        BIP85_BIP39_INDEX,
+        BIP39_APPLICATION_NUMBER,
         ChildNumber::Hardened {
             index: language_index,
         },

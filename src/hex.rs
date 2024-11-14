@@ -12,7 +12,7 @@ pub fn to_hex<C: secp256k1::Signing>(
     length: u32,
     index: u32,
 ) -> Result<String, Error> {
-    const BIP85_HEX_INDEX: ChildNumber = ChildNumber::Hardened { index: 128169 };
+    const HEX_APPLICATION_NUMBER: ChildNumber = ChildNumber::Hardened { index: 128169 };
     if length < 16 || length > 64 {
         return Err(Error::InvalidLength(length));
     }
@@ -20,7 +20,7 @@ pub fn to_hex<C: secp256k1::Signing>(
         return Err(Error::InvalidIndex(index));
     }
     let path = DerivationPath::from(vec![
-        BIP85_HEX_INDEX,
+        HEX_APPLICATION_NUMBER,
         ChildNumber::from_hardened_idx(length).unwrap(),
         ChildNumber::from_hardened_idx(index).unwrap(),
     ]);

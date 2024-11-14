@@ -15,12 +15,12 @@ pub fn to_wif<C: secp256k1::Signing>(
     root: &Xpriv,
     index: u32,
 ) -> Result<PrivateKey, Error> {
-    const BIP85_WIF_INDEX: ChildNumber = ChildNumber::Hardened { index: 2 };
+    const WIF_APPLICATION_NUMBER: ChildNumber = ChildNumber::Hardened { index: 2 };
     if index >= 0x80000000 {
         return Err(Error::InvalidIndex(index));
     }
     let path = DerivationPath::from(vec![
-        BIP85_WIF_INDEX,
+        WIF_APPLICATION_NUMBER,
         ChildNumber::from_hardened_idx(index).unwrap(),
     ]);
     let data = crate::derive(secp, root, &path)?;
