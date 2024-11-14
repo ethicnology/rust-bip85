@@ -1,19 +1,36 @@
-# BIP-85 implementation in Rust
+# BIP-85 Deterministic Entropy From BIP32 Keychains
 
-[BIP-85](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki) - deterministic entropy from bip32 keychains.
+Derives entropy from the extended private key according to [BIP-85](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki).
 
-Derives entropy from the extended private key according to
-[BIP-85](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki).
+This work is sponsored by [Bull Bitcoin](https://bullbitcoin.com) [<img 
+    align="right"
+    src="https://github.com/ethicnology/rust-bip85-fork/blob/master/bindings/dart-bip85/bullbitcoin.png" 
+    width=100
+    title="Sponsor"
+    alt="Sponsor"
+/>](https://bullbitcoin.com)
 
-<!-- Try it [online](https://ethicnology.github.io/wasm-bip85/) with WASM magic! -->
 
-# Examples
+## Features
+- [x] [BIP39 mnemonic](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#user-content-BIP39)
+- [x] [WIF](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#user-content-HDSeed_WIF)
+- [x] [XPRV](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#user-content-XPRV)
+- [x] [HEX](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#hex)
+- [x] [DRNG](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#bip85-drng)
+- [ ] [PWD base64](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#user-content-PWD_BASE64)
+- [ ] [PWD base85](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#user-content-PWD_BASE85)
+- [ ] [RSA](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#user-content-RSA)
+- [ ] [RSA GPG](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#user-content-RSA_GPG)
+- [ ] [DICE](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#user-content-DICE)
 
-There are a few [examples](https://github.com/ethicnology/rust-bip85/tree/master/examples)
-in the repository.
+
+## Flutter bindings
+Thanks to flutter_rust_bridge, I've ported this rust library to [dart-bip85](https://pub.dev/packages/bip85) for flutter applications.
+
+## Examples
+There are a few examples in the `examples/` folder.
 
 Running examples:
-
 ```sh
 cargo run --example simple
 ```
@@ -22,7 +39,7 @@ cargo run --example simple
 cargo run --example mnemonic --features japanese
 ```
 
-# Optional features
+## Optional features
 
 By default the library can derive entropy in any format specified by the standard except
 mnemonics. To use mnemonics enable feature "mnemonic".
