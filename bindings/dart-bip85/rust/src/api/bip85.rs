@@ -29,7 +29,7 @@ pub fn to_xprv(xprv: String, index: u32) -> String {
 pub fn to_hex(xprv: String, length: u32, index: u32) -> String {
     let root = Xpriv::from_str(&xprv).unwrap();
     let derived = bip85_fork::to_hex(&Secp256k1::new(), &root, length, index).unwrap();
-    return hex::encode(derived);
+    return derived;
 }
 
 #[flutter_rust_bridge::frb(sync)]

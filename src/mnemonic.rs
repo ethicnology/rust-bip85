@@ -8,7 +8,7 @@ use bitcoin::bip32::{ChildNumber, DerivationPath};
 use bitcoin::{bip32::Xpriv, key::Secp256k1, secp256k1};
 
 #[cfg(feature = "mnemonic")]
-/// Derive mnemonic in given language
+/// Derive entropy into a mnemonic for the in given language
 ///
 /// See [specs](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#bip39)
 /// for more info.
@@ -66,6 +66,26 @@ pub fn to_mnemonic_in<C: secp256k1::Signing>(
 /// Same as `to_mnemonic_in` using English language as default.
 ///
 /// `word_count` can be 12, 18 or 24, `index` - anything lower than `0x80000000`
+///
+/// ### Example
+/// ```rust
+/// use bip85_fork::*;
+/// use std::str::FromStr;
+/// use bitcoin::{
+///     bip32::Xpriv,
+///     hex::DisplayHex,
+///     key::Secp256k1,
+/// };
+///
+/// let root = Xpriv::from_str("xprv9s21ZrQH143K2LBWUUQRFXhucrQqBpKdRRxNVq2zBqsx8HVqFk2uYo8kmbaLLHRdqtQpUm98uKfu3vca1LqdGhUtyoFnCNkfmXRyPXLjbKb").unwrap();
+/// let secp = Secp256k1::new();
+///
+/// let mnemonic = to_mnemonic(&secp, &root, 12, 0).unwrap();
+/// println!("12-word english mnemonic:\n{}", mnemonic);
+///
+/// let mnemonic = to_mnemonic(&secp, &root, 24, 0).unwrap();
+/// println!("24-word english mnemonic:\n{}", mnemonic);
+/// ```
 #[cfg(feature = "mnemonic")]
 pub fn to_mnemonic<C: secp256k1::Signing>(
     secp: &Secp256k1<C>,

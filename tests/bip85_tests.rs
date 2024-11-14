@@ -44,11 +44,7 @@ fn test_raw() {
 
 #[test]
 fn test_priv() {
-    let root = Xpriv::from_str(
-        "xprv9s21ZrQH143K2LBWUUQRFXhucrQqBpKdRRxNVq2zBqsx8HVqFk2uYo8kmbaL\
-             LHRdqtQpUm98uKfu3vca1LqdGhUtyoFnCNkfmXRyPXLjbKb",
-    )
-    .unwrap();
+    let root = Xpriv::from_str("xprv9s21ZrQH143K2LBWUUQRFXhucrQqBpKdRRxNVq2zBqsx8HVqFk2uYo8kmbaLLHRdqtQpUm98uKfu3vca1LqdGhUtyoFnCNkfmXRyPXLjbKb").unwrap();
     let secp = Secp256k1::new();
     let derived = to_wif(&secp, &root, 0).unwrap();
     let expected =
