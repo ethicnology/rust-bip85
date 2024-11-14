@@ -2,11 +2,11 @@ use ::bip85_fork::error::Error;
 
 #[cfg(feature = "mnemonic")]
 use bip39::Mnemonic;
+use bip85_fork::*;
 use bitcoin::bip32::DerivationPath;
 use bitcoin::bip32::Xpriv;
 use bitcoin::secp256k1::Secp256k1;
 use bitcoin::PrivateKey;
-use bip85_fork::*;
 use std::str::FromStr;
 
 // test vectors from https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki
@@ -113,6 +113,8 @@ fn test_hex() {
 #[cfg(feature = "mnemonic")]
 #[test]
 fn test_mnemonic() {
+    use mnemonic::to_mnemonic;
+
     let root = Xpriv::from_str(
         "xprv9s21ZrQH143K2LBWUUQRFXhucrQqBpKdRRxNVq2zBqsx8HVqFk2uYo8kmbaL\
              LHRdqtQpUm98uKfu3vca1LqdGhUtyoFnCNkfmXRyPXLjbKb",

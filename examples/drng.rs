@@ -3,7 +3,6 @@ use bitcoin::{
     hex::DisplayHex,
     key::Secp256k1,
 };
-use drng::DRNG;
 use std::str::FromStr;
 
 use bip85_fork::*;
@@ -15,7 +14,7 @@ fn main() {
     let entropy: [u8; 64] = derived.try_into().unwrap();
     println!("Entropy: {}", entropy.clone().to_lower_hex_string());
 
-    let mut drng_reader = DRNG::new(entropy);
+    let mut drng_reader = bip85_fork::DRNG::new(entropy);
     let mut drng_80_bytes = [0u8; 80];
     drng_reader.read(&mut drng_80_bytes);
     println!("DRNG: {}", drng_80_bytes.to_lower_hex_string());

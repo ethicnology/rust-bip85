@@ -24,24 +24,24 @@
 pub extern crate bip39;
 pub extern crate bitcoin;
 
+pub mod drng;
 pub mod error;
+pub mod hex;
+pub mod mnemonic;
+pub mod wif;
+pub mod xprv;
 
-use error::*;
-use std::convert::TryInto;
-use std::default::Default;
+pub use drng::*;
+pub use error::Error;
+pub use hex::*;
+pub use mnemonic::*;
+pub use wif::*;
+pub use xprv::*;
 
-use bitcoin::bip32;
 use bitcoin::bip32::ChildNumber;
-use bitcoin::bip32::DerivationPath;
 use bitcoin::bip32::Xpriv;
 use bitcoin::hashes::{hmac, sha512, Hash, HashEngine};
-use bitcoin::secp256k1::{self, Secp256k1, SecretKey};
-use bitcoin::PrivateKey;
-
-#[cfg(feature = "mnemonic")]
-use bip39::Language;
-#[cfg(feature = "mnemonic")]
-use bip39::Mnemonic;
+use bitcoin::secp256k1::{self, Secp256k1};
 
 /// Derive raw bytes from the root inner using provided derivation path.
 ///
@@ -64,157 +64,4 @@ pub fn derive<C: secp256k1::Signing, P: AsRef<[ChildNumber]>>(
     h.input(&derived.private_key.secret_bytes());
     let data = hmac::Hmac::from_engine(h);
     Ok(data.to_byte_array().to_vec())
-}
-
-/// Derive Bitcoin Private Key from the root inner
-///
-/// See [specs](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#hd-seed-wif)
-/// for more info.
-///
-/// `index` can be any number lower than `0x80000000`
-pub fn to_wif<C: secp256k1::Signing>(
-    secp: &Secp256k1<C>,
-    root: &Xpriv,
-    index: u32,
-) -> Result<PrivateKey, Error> {
-    const BIP85_WIF_INDEX: ChildNumber = ChildNumber::Hardened { index: 2 };
-    if index >= 0x80000000 {
-        return Err(Error::InvalidIndex(index));
-    }
-    let path = DerivationPath::from(vec![
-        BIP85_WIF_INDEX,
-        ChildNumber::from_hardened_idx(index).unwrap(),
-    ]);
-    let data = derive(secp, root, &path)?;
-    Ok(PrivateKey {
-        compressed: true,
-        network: root.network,
-        inner: SecretKey::from_slice(&data[0..32]).unwrap(),
-    })
-}
-
-/// Derive bip32 extended private inner from root xprv
-///
-/// See [specs](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#xprv) for more info.
-///
-/// `index` can be any number lower than `0x80000000`
-pub fn to_xprv<C: secp256k1::Signing>(
-    secp: &Secp256k1<C>,
-    root: &Xpriv,
-    index: u32,
-) -> Result<Xpriv, Error> {
-    const BIP85_BIP32_INDEX: ChildNumber = ChildNumber::Hardened { index: 32 };
-    if index >= 0x80000000 {
-        return Err(Error::InvalidIndex(index));
-    }
-    let path = DerivationPath::from(vec![
-        BIP85_BIP32_INDEX,
-        ChildNumber::from_hardened_idx(index).unwrap(),
-    ]);
-    let data = derive(secp, root, &path)?;
-    let chain_code: [u8; 32] = data[..32].try_into().expect("");
-    Ok(Xpriv {
-        network: root.network,
-        depth: 0,
-        parent_fingerprint: Default::default(),
-        child_number: ChildNumber::Normal { index: 0 },
-        private_key: SecretKey::from_slice(&data[32..]).unwrap(),
-        chain_code: bip32::ChainCode::from(chain_code),
-    })
-}
-
-/// Derive binary entropy of certain length from the root inner
-///
-/// The `length` can be from 16 to 64 and defines number of bytes derived.
-///
-/// See [specs](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#hex) for more info.
-pub fn to_hex<C: secp256k1::Signing>(
-    secp: &Secp256k1<C>,
-    root: &Xpriv,
-    length: u32,
-    index: u32,
-) -> Result<Vec<u8>, Error> {
-    const BIP85_HEX_INDEX: ChildNumber = ChildNumber::Hardened { index: 128169 };
-    if length < 16 || length > 64 {
-        return Err(Error::InvalidLength(length));
-    }
-    if index >= 0x80000000 {
-        return Err(Error::InvalidIndex(index));
-    }
-    let path = DerivationPath::from(vec![
-        BIP85_HEX_INDEX,
-        ChildNumber::from_hardened_idx(length).unwrap(),
-        ChildNumber::from_hardened_idx(index).unwrap(),
-    ]);
-    let data = derive(secp, root, &path)?;
-    Ok(data[0..length as usize].to_vec())
-}
-
-#[cfg(feature = "mnemonic")]
-/// Derive mnemonic in given language
-///
-/// See [specs](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#bip39)
-/// for more info.
-///
-/// `word_count` can be 12, 18 or 24, `index` - anything lower than `0x80000000`
-pub fn to_mnemonic_in<C: secp256k1::Signing>(
-    secp: &Secp256k1<C>,
-    root: &Xpriv,
-    lang: Language,
-    word_count: u32,
-    index: u32,
-) -> Result<Mnemonic, Error> {
-    if word_count < 12 || word_count > 24 || word_count % 6 != 0 {
-        return Err(Error::InvalidWordCount(word_count));
-    }
-    if index >= 0x80000000 {
-        return Err(Error::InvalidIndex(index));
-    }
-    const BIP85_BIP39_INDEX: ChildNumber = ChildNumber::Hardened { index: 39 };
-    let language_index = match lang {
-        Language::English => 0,
-        #[cfg(feature = "japanese")]
-        Language::Japanese => 1,
-        #[cfg(feature = "korean")]
-        Language::Korean => 2,
-        #[cfg(feature = "spanish")]
-        Language::Spanish => 3,
-        #[cfg(feature = "chinese-simplified")]
-        Language::SimplifiedChinese => 4,
-        #[cfg(feature = "chinese-traditional")]
-        Language::TraditionalChinese => 5,
-        #[cfg(feature = "french")]
-        Language::French => 6,
-        #[cfg(feature = "italian")]
-        Language::Italian => 7,
-        #[cfg(feature = "czech")]
-        Language::Czech => 8,
-    };
-    let path = DerivationPath::from(vec![
-        BIP85_BIP39_INDEX,
-        ChildNumber::Hardened {
-            index: language_index,
-        },
-        ChildNumber::from_hardened_idx(word_count).unwrap(),
-        ChildNumber::from_hardened_idx(index).unwrap(),
-    ]);
-    let data = derive(secp, root, &path)?;
-    let len = word_count * 4 / 3;
-    let mnemonic = Mnemonic::from_entropy_in(lang, &data[0..len as usize]).unwrap();
-    Ok(mnemonic)
-}
-
-/// Derive mnemonic from the xprv inner
-///
-/// Same as `to_mnemonic_in` using English language as default.
-///
-/// `word_count` can be 12, 18 or 24, `index` - anything lower than `0x80000000`
-#[cfg(feature = "mnemonic")]
-pub fn to_mnemonic<C: secp256k1::Signing>(
-    secp: &Secp256k1<C>,
-    root: &Xpriv,
-    word_count: u32,
-    index: u32,
-) -> Result<Mnemonic, Error> {
-    to_mnemonic_in(secp, root, Language::English, word_count, index)
 }
