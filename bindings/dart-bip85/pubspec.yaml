@@ -1,6 +1,6 @@
 name: bip85
 description: "BIP85 bindings to rust-bip85"
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/ethicnology/rust-bip85/tree/master/bindings/dart-bip85
 repository: https://github.com/ethicnology/rust-bip85
 
@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_rust_bridge: ^2.6.0
+  flutter_rust_bridge: ^2.0.0
   plugin_platform_interface: ^2.0.2
 
 dev_dependencies:
