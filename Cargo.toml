@@ -10,6 +10,7 @@ repository = "https://github.com/ethicnology/rust-bip85"
 readme = "README.md"
 license = "MIT"
 edition = "2021"
+keywords = ["bitcoin", "bip", "bip85"]
 
 [features]
 default = ["mnemonic"]
