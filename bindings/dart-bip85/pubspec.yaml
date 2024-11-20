@@ -1,6 +1,6 @@
 name: bip85
 description: "BIP85 bindings to rust-bip85"
-version: 1.0.1
+version: 1.0.2
 homepage: https://github.com/ethicnology/rust-bip85/tree/master/bindings/dart-bip85
 repository: https://github.com/ethicnology/rust-bip85
 
