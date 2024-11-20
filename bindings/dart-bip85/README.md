@@ -18,11 +18,19 @@ This work is sponsored by [Bull Bitcoin](https://bullbitcoin.com) [<img
 I recommend checking the `example/` folder which includes a working app at `example/lib/main.dart`  as well as integration tests in `example/integration_test/`.
 
 ```dart
+import 'package:flutter/material.dart';
 import 'package:bip85/bip85.dart' as bip85;
 
-void main() async {
-  await bip85.RustLib.init() // mandatory before the start of your flutter app
+Future<void> main() async {
+  await bip85.RustLib.init(); // mandatory
+  runApp(const MyApp());
+}
 
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
   const xprv =
       "xprv9s21ZrQH143K2LBWUUQRFXhucrQqBpKdRRxNVq2zBqsx8HVqFk2uYo8kmbaLLHRdqtQpUm98uKfu3vca1LqdGhUtyoFnCNkfmXRyPXLjbKb";
 
@@ -44,6 +52,14 @@ void main() async {
     const expected =
         "xprv9s21ZrQH143K2srSbCSg4m4kLvPMzcWydgmKEnMmoZUurYuBuYG46c6P71UGXMzmriLzCCBvKQWBUv3vPB3m1SATMhp3uEjXHJ42jFg7myX";
     assert(derived == expected);
+
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: const Text('flutter_rust_bridge bip85')),
+        body: Center(child: Text(mnemonic)),
+      ),
+    );
+  }
 }
 ```
 
