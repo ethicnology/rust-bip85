@@ -1,0 +1,15 @@
+cargo:
+  debug: # Configuration of cargo execution during debug builds
+    toolchain: stable # default
+  release: # Configuration of cargo execution for release builds
+    toolchain: nightly # rustup will be invoked with nightly toolchain
+    extra_flags: # extra arguments passed to cargo build
+      - -Z
+      - build-std=panic_abort,std
+
+precompiled_binaries:
+  # Uri prefix used when downloading precompiled binaries.
+  url_prefix: https://github.com/ethicnology/rust-bip85/releases/download/precompiled_
+
+  # Public key for verifying downloaded precompiled binaries.
+  public_key: e56a85ab8294c9f0cd8bb58a624e23b83b5682380d048e41b041b6624d949976
