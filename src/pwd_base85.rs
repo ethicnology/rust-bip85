@@ -10,7 +10,7 @@ use bitcoin::{bip32::Xpriv, key::Secp256k1, secp256k1};
 ///
 /// ### Example
 /// ```rust
-/// use bip85_fork::*;
+/// use bip85_extended::*;
 /// use bitcoin::{bip32::Xpriv, key::Secp256k1};
 /// use std::str::FromStr;
 ///

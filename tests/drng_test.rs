@@ -1,6 +1,6 @@
 use std::str::FromStr;
 
-use bip85_fork::drng::DRNG;
+use bip85_extended::drng::DRNG;
 use bitcoin::{
     bip32::{DerivationPath, Xpriv},
     hex::DisplayHex,
@@ -15,7 +15,7 @@ fn test_drng_80() {
     )
     .unwrap();
     let path = DerivationPath::from_str("m/0'/0'").unwrap();
-    let entropy = bip85_fork::derive(&Secp256k1::new(), &root, &path).unwrap();
+    let entropy = bip85_extended::derive(&Secp256k1::new(), &root, &path).unwrap();
 
     let entropy_hex = entropy.to_lower_hex_string();
     let expected = "efecfbccffea313214232d29e71563d941229afb4338c21f9517c41aaa0d16f00b83d2a09ef747e7a64e8e2bd5a14869e693da66ce94ac2da570ab7ee48618f7";

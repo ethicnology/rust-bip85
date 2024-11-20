@@ -12,7 +12,7 @@ use sha3::{
 ///
 /// ### Example
 /// ```rust
-/// use bip85_fork::*;
+/// use bip85_extended::*;
 /// use std::str::FromStr;
 /// use bitcoin::{
 ///     bip32::{DerivationPath, Xpriv},

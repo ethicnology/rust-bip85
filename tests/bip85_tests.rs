@@ -1,8 +1,8 @@
-use ::bip85_fork::error::Error;
+use ::bip85_extended::error::Error;
 
 #[cfg(feature = "mnemonic")]
 use bip39::Mnemonic;
-use bip85_fork::*;
+use bip85_extended::*;
 use bitcoin::bip32::DerivationPath;
 use bitcoin::bip32::Xpriv;
 use bitcoin::secp256k1::Secp256k1;

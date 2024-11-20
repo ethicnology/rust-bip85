@@ -1,9 +1,9 @@
 [package]
-name = "bip85_fork"
+name = "bip85_extended"
 version = "0.1.1"
 authors = [
     "Rita Kitic <rikitau@protonmail.com>",
-    "Azad EMERY <ethicnology@pm.me>",
+    "Jules Azad EMERY <ethicnology@pm.me>",
 ]
 description = "BIP-85 - deterministic entropy from bip32 keychains"
 repository = "https://github.com/ethicnology/rust-bip85"

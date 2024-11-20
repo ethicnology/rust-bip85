@@ -9,7 +9,7 @@ fn test_pwd_base64() {
     )
     .unwrap();
 
-    let pwd_base64 = bip85_fork::to_pwd_base64(&Secp256k1::new(), &root, 21, 0).unwrap();
+    let pwd_base64 = bip85_extended::to_pwd_base64(&Secp256k1::new(), &root, 21, 0).unwrap();
     let expected = "dKLoepugzdVJvdL56ogNV";
     assert_eq!(expected, pwd_base64);
 }

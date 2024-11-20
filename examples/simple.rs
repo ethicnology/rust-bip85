@@ -1,4 +1,4 @@
-extern crate bip85_fork;
+extern crate bip85_extended;
 
 use std::str::FromStr;
 
@@ -13,12 +13,12 @@ fn main() {
     .unwrap();
     let secp = Secp256k1::new();
 
-    let derived = bip85_fork::to_wif(&secp, &root, 0).unwrap();
+    let derived = bip85_extended::to_wif(&secp, &root, 0).unwrap();
     println!("WIF key:\n{}", derived);
 
-    let data = bip85_fork::to_hex(&secp, &root, 35, 0).unwrap();
+    let data = bip85_extended::to_hex(&secp, &root, 35, 0).unwrap();
     println!("35 bytes of hex entropy:\n{:x?}", data);
 
-    let xprv = bip85_fork::to_xprv(&secp, &root, 0).unwrap();
+    let xprv = bip85_extended::to_xprv(&secp, &root, 0).unwrap();
     println!("Derived extended private key:\n{}", xprv);
 }

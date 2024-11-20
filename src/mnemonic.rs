@@ -69,7 +69,7 @@ pub fn to_mnemonic_in<C: secp256k1::Signing>(
 ///
 /// ### Example
 /// ```rust
-/// use bip85_fork::*;
+/// use bip85_extended::*;
 /// use std::str::FromStr;
 /// use bitcoin::{
 ///     bip32::Xpriv,
