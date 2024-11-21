@@ -8,5 +8,5 @@ crate-type = ["cdylib", "staticlib"]
 
 [dependencies]
 bip85_extended = "=1.1.0"
-flutter_rust_bridge = "=2.6.0"
+flutter_rust_bridge = "=2.0.0"
 hex = "0.4.3"
