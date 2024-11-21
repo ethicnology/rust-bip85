@@ -1,8 +1,9 @@
+import 'package:bip85/bip85.dart';
 import 'package:flutter/material.dart';
 import 'package:bip85/bip85.dart' as bip85;
 
 Future<void> main() async {
-  await bip85.RustLib.init(); // mandatory
+  await LibBip85.init();
   runApp(const MyApp());
 }
 

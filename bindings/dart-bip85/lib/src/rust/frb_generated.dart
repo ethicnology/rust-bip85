@@ -12,15 +12,16 @@ import 'frb_generated.io.dart'
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
 /// Main entrypoint of the Rust API
-class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
+class LibBip85
+    extends BaseEntrypoint<LibBip85Api, LibBip85ApiImpl, LibBip85Wire> {
   @internal
-  static final instance = RustLib._();
+  static final instance = LibBip85._();
 
-  RustLib._();
+  LibBip85._();
 
   /// Initialize flutter_rust_bridge
   static Future<void> init({
-    RustLibApi? api,
+    LibBip85Api? api,
     BaseHandler? handler,
     ExternalLibrary? externalLibrary,
   }) async {
@@ -34,7 +35,7 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
   /// Initialize flutter_rust_bridge in mock mode.
   /// No libraries for FFI are loaded.
   static void initMock({
-    required RustLibApi api,
+    required LibBip85Api api,
   }) {
     instance.initMockImpl(
       api: api,
@@ -48,12 +49,12 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
   static void dispose() => instance.disposeImpl();
 
   @override
-  ApiImplConstructor<RustLibApiImpl, RustLibWire> get apiImplConstructor =>
-      RustLibApiImpl.new;
+  ApiImplConstructor<LibBip85ApiImpl, LibBip85Wire> get apiImplConstructor =>
+      LibBip85ApiImpl.new;
 
   @override
-  WireConstructor<RustLibWire> get wireConstructor =>
-      RustLibWire.fromExternalLibrary;
+  WireConstructor<LibBip85Wire> get wireConstructor =>
+      LibBip85Wire.fromExternalLibrary;
 
   @override
   Future<void> executeRustInitializers() async {}
@@ -76,7 +77,7 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
   );
 }
 
-abstract class RustLibApi extends BaseApi {
+abstract class LibBip85Api extends BaseApi {
   Uint8List crateApiBip85Derive({required String xprv, required String path});
 
   String crateApiBip85ToHex(
@@ -90,8 +91,8 @@ abstract class RustLibApi extends BaseApi {
   String crateApiBip85ToXprv({required String xprv, required int index});
 }
 
-class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
-  RustLibApiImpl({
+class LibBip85ApiImpl extends LibBip85ApiImplPlatform implements LibBip85Api {
+  LibBip85ApiImpl({
     required super.handler,
     required super.wire,
     required super.generalizedFrbRustBinding,

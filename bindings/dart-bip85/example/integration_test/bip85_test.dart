@@ -8,7 +8,7 @@ void main() async {
   const xprv =
       "xprv9s21ZrQH143K2LBWUUQRFXhucrQqBpKdRRxNVq2zBqsx8HVqFk2uYo8kmbaLLHRdqtQpUm98uKfu3vca1LqdGhUtyoFnCNkfmXRyPXLjbKb";
 
-  setUpAll(() async => await bip85.RustLib.init());
+  setUpAll(() async => await bip85.LibBip85.init());
 
   test('mnemonic', () {
     final derived = bip85.toMnemonic(xprv: xprv, wordCount: 12, index: 0);

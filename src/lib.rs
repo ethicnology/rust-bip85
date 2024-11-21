@@ -1,6 +1,6 @@
 // Rust implementation of bip-85
-// Written in 2020 by Rita Kitic <rikitau@protonmail.com>
-// Maintained in 2024 by Azad EMERY <ethicnology@pm.me>
+// Initial work in 2020 by Rita Kitic <rikitau@protonmail.com>
+// Maintained in 2024 by J. Azad EMERY <ethicnology@pm.me>
 
 //! # BIP-85 deterministic entropy generation
 //!
