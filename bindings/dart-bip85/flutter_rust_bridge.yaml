@@ -1,4 +1,4 @@
-rust_input: crate::api
+rust_input: bip85_extended
 rust_root: rust/
 dart_output: lib/src/rust
 dart_entrypoint_class_name: LibBip85

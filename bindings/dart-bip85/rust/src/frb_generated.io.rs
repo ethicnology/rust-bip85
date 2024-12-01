@@ -4,6 +4,7 @@
 // Section: imports
 
 use super::*;
+use bip85_extended::drng::*;
 use flutter_rust_bridge::for_generated::byteorder::{NativeEndian, ReadBytesExt, WriteBytesExt};
 use flutter_rust_bridge::for_generated::{transform_result_dco, Lifetimeable, Lockable};
 use flutter_rust_bridge::{Handler, IntoIntoDart};
@@ -11,3 +12,39 @@ use flutter_rust_bridge::{Handler, IntoIntoDart};
 // Section: boilerplate
 
 flutter_rust_bridge::frb_generated_boilerplate_io!();
+
+#[no_mangle]
+pub extern "C" fn frbgen_bip85_rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG(
+    ptr: *const std::ffi::c_void,
+) {
+    MoiArc::<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<DRNG>>::increment_strong_count(
+        ptr as _,
+    );
+}
+
+#[no_mangle]
+pub extern "C" fn frbgen_bip85_rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG(
+    ptr: *const std::ffi::c_void,
+) {
+    MoiArc::<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<DRNG>>::decrement_strong_count(
+        ptr as _,
+    );
+}
+
+#[no_mangle]
+pub extern "C" fn frbgen_bip85_rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInneru8(
+    ptr: *const std::ffi::c_void,
+) {
+    MoiArc::<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<[u8]>>::increment_strong_count(
+        ptr as _,
+    );
+}
+
+#[no_mangle]
+pub extern "C" fn frbgen_bip85_rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInneru8(
+    ptr: *const std::ffi::c_void,
+) {
+    MoiArc::<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<[u8]>>::decrement_strong_count(
+        ptr as _,
+    );
+}

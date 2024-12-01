@@ -6,11 +6,11 @@
 // Static analysis wrongly picks the IO variant, thus ignore this
 // ignore_for_file: argument_type_not_assignable
 
-import 'api/bip85.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated_web.dart';
+import 'third_party/bip85_extended/drng.dart';
 
 abstract class LibBip85ApiImplPlatform extends BaseApiImpl<LibBip85Wire> {
   LibBip85ApiImplPlatform({
@@ -20,35 +20,87 @@ abstract class LibBip85ApiImplPlatform extends BaseApiImpl<LibBip85Wire> {
     required super.portManager,
   });
 
+  CrossPlatformFinalizerArg get rust_arc_decrement_strong_count_DrngPtr => wire
+      .rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG;
+
+  CrossPlatformFinalizerArg get rust_arc_decrement_strong_count_U8Ptr => wire
+      .rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInneru8;
+
   @protected
-  String dco_decode_String(dynamic raw);
+  Drng
+      dco_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG(
+          dynamic raw);
+
+  @protected
+  Drng
+      dco_decode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG(
+          dynamic raw);
+
+  @protected
+  U8 dco_decode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInneru8(
+      dynamic raw);
+
+  @protected
+  Drng
+      dco_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG(
+          dynamic raw);
+
+  @protected
+  U8 dco_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInneru8(
+      dynamic raw);
 
   @protected
   Uint8List dco_decode_list_prim_u_8_strict(dynamic raw);
 
   @protected
-  int dco_decode_u_32(dynamic raw);
+  int dco_decode_u_8(dynamic raw);
 
   @protected
-  int dco_decode_u_8(dynamic raw);
+  U8Array64 dco_decode_u_8_array_64(dynamic raw);
 
   @protected
   void dco_decode_unit(dynamic raw);
 
   @protected
-  String sse_decode_String(SseDeserializer deserializer);
+  BigInt dco_decode_usize(dynamic raw);
+
+  @protected
+  Drng
+      sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG(
+          SseDeserializer deserializer);
+
+  @protected
+  Drng
+      sse_decode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG(
+          SseDeserializer deserializer);
+
+  @protected
+  U8 sse_decode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInneru8(
+      SseDeserializer deserializer);
+
+  @protected
+  Drng
+      sse_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG(
+          SseDeserializer deserializer);
+
+  @protected
+  U8 sse_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInneru8(
+      SseDeserializer deserializer);
 
   @protected
   Uint8List sse_decode_list_prim_u_8_strict(SseDeserializer deserializer);
 
   @protected
-  int sse_decode_u_32(SseDeserializer deserializer);
-
-  @protected
   int sse_decode_u_8(SseDeserializer deserializer);
 
   @protected
+  U8Array64 sse_decode_u_8_array_64(SseDeserializer deserializer);
+
+  @protected
   void sse_decode_unit(SseDeserializer deserializer);
+
+  @protected
+  BigInt sse_decode_usize(SseDeserializer deserializer);
 
   @protected
   int sse_decode_i_32(SseDeserializer deserializer);
@@ -57,20 +109,45 @@ abstract class LibBip85ApiImplPlatform extends BaseApiImpl<LibBip85Wire> {
   bool sse_decode_bool(SseDeserializer deserializer);
 
   @protected
-  void sse_encode_String(String self, SseSerializer serializer);
+  void
+      sse_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG(
+          Drng self, SseSerializer serializer);
+
+  @protected
+  void
+      sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG(
+          Drng self, SseSerializer serializer);
+
+  @protected
+  void
+      sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInneru8(
+          U8 self, SseSerializer serializer);
+
+  @protected
+  void
+      sse_encode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG(
+          Drng self, SseSerializer serializer);
+
+  @protected
+  void
+      sse_encode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInneru8(
+          U8 self, SseSerializer serializer);
 
   @protected
   void sse_encode_list_prim_u_8_strict(
       Uint8List self, SseSerializer serializer);
 
   @protected
-  void sse_encode_u_32(int self, SseSerializer serializer);
-
-  @protected
   void sse_encode_u_8(int self, SseSerializer serializer);
 
   @protected
+  void sse_encode_u_8_array_64(U8Array64 self, SseSerializer serializer);
+
+  @protected
   void sse_encode_unit(void self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_usize(BigInt self, SseSerializer serializer);
 
   @protected
   void sse_encode_i_32(int self, SseSerializer serializer);
@@ -83,6 +160,30 @@ abstract class LibBip85ApiImplPlatform extends BaseApiImpl<LibBip85Wire> {
 
 class LibBip85Wire implements BaseWire {
   LibBip85Wire.fromExternalLibrary(ExternalLibrary lib);
+
+  void rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG(
+          int ptr) =>
+      wasmModule
+          .rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG(
+              ptr);
+
+  void rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG(
+          int ptr) =>
+      wasmModule
+          .rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG(
+              ptr);
+
+  void rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInneru8(
+          int ptr) =>
+      wasmModule
+          .rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInneru8(
+              ptr);
+
+  void rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInneru8(
+          int ptr) =>
+      wasmModule
+          .rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInneru8(
+              ptr);
 }
 
 @JS('wasm_bindgen')
@@ -90,4 +191,20 @@ external LibBip85WasmModule get wasmModule;
 
 @JS()
 @anonymous
-extension type LibBip85WasmModule._(JSObject _) implements JSObject {}
+extension type LibBip85WasmModule._(JSObject _) implements JSObject {
+  external void
+      rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG(
+          int ptr);
+
+  external void
+      rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG(
+          int ptr);
+
+  external void
+      rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInneru8(
+          int ptr);
+
+  external void
+      rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInneru8(
+          int ptr);
+}

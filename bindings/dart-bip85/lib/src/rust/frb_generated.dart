@@ -3,13 +3,13 @@
 
 // ignore_for_file: unused_import, unused_element, unnecessary_import, duplicate_ignore, invalid_use_of_internal_member, annotate_overrides, non_constant_identifier_names, curly_braces_in_flow_control_structures, prefer_const_literals_to_create_immutables, unused_field
 
-import 'api/bip85.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'frb_generated.dart';
 import 'frb_generated.io.dart'
     if (dart.library.js_interop) 'frb_generated.web.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
+import 'third_party/bip85_extended/drng.dart';
 
 /// Main entrypoint of the Rust API
 class LibBip85
@@ -57,7 +57,7 @@ class LibBip85
   String get codegenVersion => '2.0.0';
 
   @override
-  int get rustContentHash => -1756544811;
+  int get rustContentHash => -1745769919;
 
   static const kDefaultExternalLibraryLoaderConfig =
       ExternalLibraryLoaderConfig(
@@ -68,17 +68,22 @@ class LibBip85
 }
 
 abstract class LibBip85Api extends BaseApi {
-  Uint8List crateApiBip85Derive({required String xprv, required String path});
+  Future<Drng> bip85ExtendedDrngDrngNew({required U8Array64 entropy});
 
-  String crateApiBip85ToHex(
-      {required String xprv, required int length, required int index});
+  Future<void> bip85ExtendedDrngDrngRead(
+      {required Drng that, required U8 buffer});
 
-  String crateApiBip85ToMnemonic(
-      {required String xprv, required int wordCount, required int index});
+  RustArcIncrementStrongCountFnType get rust_arc_increment_strong_count_Drng;
 
-  String crateApiBip85ToWif({required String xprv, required int index});
+  RustArcDecrementStrongCountFnType get rust_arc_decrement_strong_count_Drng;
 
-  String crateApiBip85ToXprv({required String xprv, required int index});
+  CrossPlatformFinalizerArg get rust_arc_decrement_strong_count_DrngPtr;
+
+  RustArcIncrementStrongCountFnType get rust_arc_increment_strong_count_U8;
+
+  RustArcDecrementStrongCountFnType get rust_arc_decrement_strong_count_U8;
+
+  CrossPlatformFinalizerArg get rust_arc_decrement_strong_count_U8Ptr;
 }
 
 class LibBip85ApiImpl extends LibBip85ApiImplPlatform implements LibBip85Api {
@@ -90,133 +95,106 @@ class LibBip85ApiImpl extends LibBip85ApiImplPlatform implements LibBip85Api {
   });
 
   @override
-  Uint8List crateApiBip85Derive({required String xprv, required String path}) {
-    return handler.executeSync(SyncTask(
-      callFfi: () {
+  Future<Drng> bip85ExtendedDrngDrngNew({required U8Array64 entropy}) {
+    return handler.executeNormal(NormalTask(
+      callFfi: (port_) {
         final serializer = SseSerializer(generalizedFrbRustBinding);
-        sse_encode_String(xprv, serializer);
-        sse_encode_String(path, serializer);
-        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 1)!;
+        sse_encode_u_8_array_64(entropy, serializer);
+        pdeCallFfi(generalizedFrbRustBinding, serializer,
+            funcId: 1, port: port_);
       },
       codec: SseCodec(
-        decodeSuccessData: sse_decode_list_prim_u_8_strict,
+        decodeSuccessData:
+            sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG,
         decodeErrorData: null,
       ),
-      constMeta: kCrateApiBip85DeriveConstMeta,
-      argValues: [xprv, path],
+      constMeta: kBip85ExtendedDrngDrngNewConstMeta,
+      argValues: [entropy],
       apiImpl: this,
     ));
   }
 
-  TaskConstMeta get kCrateApiBip85DeriveConstMeta => const TaskConstMeta(
-        debugName: "derive",
-        argNames: ["xprv", "path"],
+  TaskConstMeta get kBip85ExtendedDrngDrngNewConstMeta => const TaskConstMeta(
+        debugName: "Drng_new",
+        argNames: ["entropy"],
       );
 
   @override
-  String crateApiBip85ToHex(
-      {required String xprv, required int length, required int index}) {
-    return handler.executeSync(SyncTask(
-      callFfi: () {
+  Future<void> bip85ExtendedDrngDrngRead(
+      {required Drng that, required U8 buffer}) {
+    return handler.executeNormal(NormalTask(
+      callFfi: (port_) {
         final serializer = SseSerializer(generalizedFrbRustBinding);
-        sse_encode_String(xprv, serializer);
-        sse_encode_u_32(length, serializer);
-        sse_encode_u_32(index, serializer);
-        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 2)!;
+        sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG(
+            that, serializer);
+        sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInneru8(
+            buffer, serializer);
+        pdeCallFfi(generalizedFrbRustBinding, serializer,
+            funcId: 2, port: port_);
       },
       codec: SseCodec(
-        decodeSuccessData: sse_decode_String,
+        decodeSuccessData: sse_decode_unit,
         decodeErrorData: null,
       ),
-      constMeta: kCrateApiBip85ToHexConstMeta,
-      argValues: [xprv, length, index],
+      constMeta: kBip85ExtendedDrngDrngReadConstMeta,
+      argValues: [that, buffer],
       apiImpl: this,
     ));
   }
 
-  TaskConstMeta get kCrateApiBip85ToHexConstMeta => const TaskConstMeta(
-        debugName: "to_hex",
-        argNames: ["xprv", "length", "index"],
+  TaskConstMeta get kBip85ExtendedDrngDrngReadConstMeta => const TaskConstMeta(
+        debugName: "Drng_read",
+        argNames: ["that", "buffer"],
       );
 
-  @override
-  String crateApiBip85ToMnemonic(
-      {required String xprv, required int wordCount, required int index}) {
-    return handler.executeSync(SyncTask(
-      callFfi: () {
-        final serializer = SseSerializer(generalizedFrbRustBinding);
-        sse_encode_String(xprv, serializer);
-        sse_encode_u_32(wordCount, serializer);
-        sse_encode_u_32(index, serializer);
-        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 3)!;
-      },
-      codec: SseCodec(
-        decodeSuccessData: sse_decode_String,
-        decodeErrorData: null,
-      ),
-      constMeta: kCrateApiBip85ToMnemonicConstMeta,
-      argValues: [xprv, wordCount, index],
-      apiImpl: this,
-    ));
-  }
+  RustArcIncrementStrongCountFnType get rust_arc_increment_strong_count_Drng =>
+      wire.rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG;
 
-  TaskConstMeta get kCrateApiBip85ToMnemonicConstMeta => const TaskConstMeta(
-        debugName: "to_mnemonic",
-        argNames: ["xprv", "wordCount", "index"],
-      );
+  RustArcDecrementStrongCountFnType get rust_arc_decrement_strong_count_Drng =>
+      wire.rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG;
 
-  @override
-  String crateApiBip85ToWif({required String xprv, required int index}) {
-    return handler.executeSync(SyncTask(
-      callFfi: () {
-        final serializer = SseSerializer(generalizedFrbRustBinding);
-        sse_encode_String(xprv, serializer);
-        sse_encode_u_32(index, serializer);
-        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 4)!;
-      },
-      codec: SseCodec(
-        decodeSuccessData: sse_decode_String,
-        decodeErrorData: null,
-      ),
-      constMeta: kCrateApiBip85ToWifConstMeta,
-      argValues: [xprv, index],
-      apiImpl: this,
-    ));
-  }
+  RustArcIncrementStrongCountFnType get rust_arc_increment_strong_count_U8 => wire
+      .rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInneru8;
 
-  TaskConstMeta get kCrateApiBip85ToWifConstMeta => const TaskConstMeta(
-        debugName: "to_wif",
-        argNames: ["xprv", "index"],
-      );
-
-  @override
-  String crateApiBip85ToXprv({required String xprv, required int index}) {
-    return handler.executeSync(SyncTask(
-      callFfi: () {
-        final serializer = SseSerializer(generalizedFrbRustBinding);
-        sse_encode_String(xprv, serializer);
-        sse_encode_u_32(index, serializer);
-        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 5)!;
-      },
-      codec: SseCodec(
-        decodeSuccessData: sse_decode_String,
-        decodeErrorData: null,
-      ),
-      constMeta: kCrateApiBip85ToXprvConstMeta,
-      argValues: [xprv, index],
-      apiImpl: this,
-    ));
-  }
-
-  TaskConstMeta get kCrateApiBip85ToXprvConstMeta => const TaskConstMeta(
-        debugName: "to_xprv",
-        argNames: ["xprv", "index"],
-      );
+  RustArcDecrementStrongCountFnType get rust_arc_decrement_strong_count_U8 => wire
+      .rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInneru8;
 
   @protected
-  String dco_decode_String(dynamic raw) {
+  Drng
+      dco_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG(
+          dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
-    return raw as String;
+    return DrngImpl.frbInternalDcoDecode(raw as List<dynamic>);
+  }
+
+  @protected
+  Drng
+      dco_decode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG(
+          dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return DrngImpl.frbInternalDcoDecode(raw as List<dynamic>);
+  }
+
+  @protected
+  U8 dco_decode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInneru8(
+      dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return U8Impl.frbInternalDcoDecode(raw as List<dynamic>);
+  }
+
+  @protected
+  Drng
+      dco_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG(
+          dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return DrngImpl.frbInternalDcoDecode(raw as List<dynamic>);
+  }
+
+  @protected
+  U8 dco_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInneru8(
+      dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return U8Impl.frbInternalDcoDecode(raw as List<dynamic>);
   }
 
   @protected
@@ -226,15 +204,15 @@ class LibBip85ApiImpl extends LibBip85ApiImplPlatform implements LibBip85Api {
   }
 
   @protected
-  int dco_decode_u_32(dynamic raw) {
+  int dco_decode_u_8(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return raw as int;
   }
 
   @protected
-  int dco_decode_u_8(dynamic raw) {
+  U8Array64 dco_decode_u_8_array_64(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
-    return raw as int;
+    return U8Array64(dco_decode_list_prim_u_8_strict(raw));
   }
 
   @protected
@@ -244,10 +222,52 @@ class LibBip85ApiImpl extends LibBip85ApiImplPlatform implements LibBip85Api {
   }
 
   @protected
-  String sse_decode_String(SseDeserializer deserializer) {
+  BigInt dco_decode_usize(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dcoDecodeU64(raw);
+  }
+
+  @protected
+  Drng
+      sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG(
+          SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    var inner = sse_decode_list_prim_u_8_strict(deserializer);
-    return utf8.decoder.convert(inner);
+    return DrngImpl.frbInternalSseDecode(
+        sse_decode_usize(deserializer), sse_decode_i_32(deserializer));
+  }
+
+  @protected
+  Drng
+      sse_decode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG(
+          SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return DrngImpl.frbInternalSseDecode(
+        sse_decode_usize(deserializer), sse_decode_i_32(deserializer));
+  }
+
+  @protected
+  U8 sse_decode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInneru8(
+      SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return U8Impl.frbInternalSseDecode(
+        sse_decode_usize(deserializer), sse_decode_i_32(deserializer));
+  }
+
+  @protected
+  Drng
+      sse_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG(
+          SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return DrngImpl.frbInternalSseDecode(
+        sse_decode_usize(deserializer), sse_decode_i_32(deserializer));
+  }
+
+  @protected
+  U8 sse_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInneru8(
+      SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return U8Impl.frbInternalSseDecode(
+        sse_decode_usize(deserializer), sse_decode_i_32(deserializer));
   }
 
   @protected
@@ -258,20 +278,27 @@ class LibBip85ApiImpl extends LibBip85ApiImplPlatform implements LibBip85Api {
   }
 
   @protected
-  int sse_decode_u_32(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return deserializer.buffer.getUint32();
-  }
-
-  @protected
   int sse_decode_u_8(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     return deserializer.buffer.getUint8();
   }
 
   @protected
+  U8Array64 sse_decode_u_8_array_64(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var inner = sse_decode_list_prim_u_8_strict(deserializer);
+    return U8Array64(inner);
+  }
+
+  @protected
   void sse_decode_unit(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
+  }
+
+  @protected
+  BigInt sse_decode_usize(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return deserializer.buffer.getBigUint64();
   }
 
   @protected
@@ -287,9 +314,48 @@ class LibBip85ApiImpl extends LibBip85ApiImplPlatform implements LibBip85Api {
   }
 
   @protected
-  void sse_encode_String(String self, SseSerializer serializer) {
+  void
+      sse_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG(
+          Drng self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_list_prim_u_8_strict(utf8.encoder.convert(self), serializer);
+    sse_encode_usize(
+        (self as DrngImpl).frbInternalSseEncode(move: true), serializer);
+  }
+
+  @protected
+  void
+      sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG(
+          Drng self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_usize(
+        (self as DrngImpl).frbInternalSseEncode(move: false), serializer);
+  }
+
+  @protected
+  void
+      sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInneru8(
+          U8 self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_usize(
+        (self as U8Impl).frbInternalSseEncode(move: false), serializer);
+  }
+
+  @protected
+  void
+      sse_encode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerDRNG(
+          Drng self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_usize(
+        (self as DrngImpl).frbInternalSseEncode(move: null), serializer);
+  }
+
+  @protected
+  void
+      sse_encode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInneru8(
+          U8 self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_usize(
+        (self as U8Impl).frbInternalSseEncode(move: null), serializer);
   }
 
   @protected
@@ -301,20 +367,26 @@ class LibBip85ApiImpl extends LibBip85ApiImplPlatform implements LibBip85Api {
   }
 
   @protected
-  void sse_encode_u_32(int self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    serializer.buffer.putUint32(self);
-  }
-
-  @protected
   void sse_encode_u_8(int self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     serializer.buffer.putUint8(self);
   }
 
   @protected
+  void sse_encode_u_8_array_64(U8Array64 self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_list_prim_u_8_strict(self.inner, serializer);
+  }
+
+  @protected
   void sse_encode_unit(void self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
+  }
+
+  @protected
+  void sse_encode_usize(BigInt self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    serializer.buffer.putBigUint64(self);
   }
 
   @protected
@@ -328,4 +400,47 @@ class LibBip85ApiImpl extends LibBip85ApiImplPlatform implements LibBip85Api {
     // Codec=Sse (Serialization based), see doc to use other codecs
     serializer.buffer.putUint8(self ? 1 : 0);
   }
+}
+
+@sealed
+class DrngImpl extends RustOpaque implements Drng {
+  // Not to be used by end users
+  DrngImpl.frbInternalDcoDecode(List<dynamic> wire)
+      : super.frbInternalDcoDecode(wire, _kStaticData);
+
+  // Not to be used by end users
+  DrngImpl.frbInternalSseDecode(BigInt ptr, int externalSizeOnNative)
+      : super.frbInternalSseDecode(ptr, externalSizeOnNative, _kStaticData);
+
+  static final _kStaticData = RustArcStaticData(
+    rustArcIncrementStrongCount:
+        LibBip85.instance.api.rust_arc_increment_strong_count_Drng,
+    rustArcDecrementStrongCount:
+        LibBip85.instance.api.rust_arc_decrement_strong_count_Drng,
+    rustArcDecrementStrongCountPtr:
+        LibBip85.instance.api.rust_arc_decrement_strong_count_DrngPtr,
+  );
+
+  Future<void> read({required U8 buffer}) => LibBip85.instance.api
+      .bip85ExtendedDrngDrngRead(that: this, buffer: buffer);
+}
+
+@sealed
+class U8Impl extends RustOpaque implements U8 {
+  // Not to be used by end users
+  U8Impl.frbInternalDcoDecode(List<dynamic> wire)
+      : super.frbInternalDcoDecode(wire, _kStaticData);
+
+  // Not to be used by end users
+  U8Impl.frbInternalSseDecode(BigInt ptr, int externalSizeOnNative)
+      : super.frbInternalSseDecode(ptr, externalSizeOnNative, _kStaticData);
+
+  static final _kStaticData = RustArcStaticData(
+    rustArcIncrementStrongCount:
+        LibBip85.instance.api.rust_arc_increment_strong_count_U8,
+    rustArcDecrementStrongCount:
+        LibBip85.instance.api.rust_arc_decrement_strong_count_U8,
+    rustArcDecrementStrongCountPtr:
+        LibBip85.instance.api.rust_arc_decrement_strong_count_U8Ptr,
+  );
 }
