@@ -20,11 +20,9 @@ packages:
   bip85:
     dependency: "direct main"
     description:
-      path: "bindings/dart-bip85"
-      ref: master
-      resolved-ref: "2321b17f3e1c74f15bdb95638bb8c65bbbe2a2af"
-      url: "https://github.com/ethicnology/rust-bip85.git"
-    source: git
+      path: ".."
+      relative: true
+    source: path
     version: "1.0.2"
   boolean_selector:
     dependency: transitive

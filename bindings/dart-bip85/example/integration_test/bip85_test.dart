@@ -33,11 +33,23 @@ void main() async {
     expect(derived, expected);
   });
 
-  test('hex', () {
+  test('xpriv', () {
     final derived = bip85.toXprv(xprv: xprv, index: 0);
     const expected =
         "xprv9s21ZrQH143K2srSbCSg4m4kLvPMzcWydgmKEnMmoZUurYuBuYG46c6P71UGXMzmriLzCCBvKQWBUv3vPB3m1SATMhp3uEjXHJ42jFg7myX";
 
+    expect(derived, expected);
+  });
+
+  test('toBase64', () {
+    final derived = bip85.toBase64(xprv: xprv, length: 21, index: 0);
+    const expected = "dKLoepugzdVJvdL56ogNV";
+    expect(derived, expected);
+  });
+
+  test('toBase85', () {
+    final derived = bip85.toBase85(xprv: xprv, length: 12, index: 0);
+    const expected = "_s`{TW89)i4`";
     expect(derived, expected);
   });
 
