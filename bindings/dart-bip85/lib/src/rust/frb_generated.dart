@@ -57,7 +57,7 @@ class LibBip85
   String get codegenVersion => '2.0.0';
 
   @override
-  int get rustContentHash => -1756544811;
+  int get rustContentHash => 1370172147;
 
   static const kDefaultExternalLibraryLoaderConfig =
       ExternalLibraryLoaderConfig(
@@ -69,6 +69,12 @@ class LibBip85
 
 abstract class LibBip85Api extends BaseApi {
   Uint8List crateApiBip85Derive({required String xprv, required String path});
+
+  String crateApiBip85ToBase64(
+      {required String xprv, required int length, required int index});
+
+  String crateApiBip85ToBase85(
+      {required String xprv, required int length, required int index});
 
   String crateApiBip85ToHex(
       {required String xprv, required int length, required int index});
@@ -114,7 +120,7 @@ class LibBip85ApiImpl extends LibBip85ApiImplPlatform implements LibBip85Api {
       );
 
   @override
-  String crateApiBip85ToHex(
+  String crateApiBip85ToBase64(
       {required String xprv, required int length, required int index}) {
     return handler.executeSync(SyncTask(
       callFfi: () {
@@ -123,6 +129,58 @@ class LibBip85ApiImpl extends LibBip85ApiImplPlatform implements LibBip85Api {
         sse_encode_u_32(length, serializer);
         sse_encode_u_32(index, serializer);
         return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 2)!;
+      },
+      codec: SseCodec(
+        decodeSuccessData: sse_decode_String,
+        decodeErrorData: null,
+      ),
+      constMeta: kCrateApiBip85ToBase64ConstMeta,
+      argValues: [xprv, length, index],
+      apiImpl: this,
+    ));
+  }
+
+  TaskConstMeta get kCrateApiBip85ToBase64ConstMeta => const TaskConstMeta(
+        debugName: "to_base64",
+        argNames: ["xprv", "length", "index"],
+      );
+
+  @override
+  String crateApiBip85ToBase85(
+      {required String xprv, required int length, required int index}) {
+    return handler.executeSync(SyncTask(
+      callFfi: () {
+        final serializer = SseSerializer(generalizedFrbRustBinding);
+        sse_encode_String(xprv, serializer);
+        sse_encode_u_32(length, serializer);
+        sse_encode_u_32(index, serializer);
+        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 3)!;
+      },
+      codec: SseCodec(
+        decodeSuccessData: sse_decode_String,
+        decodeErrorData: null,
+      ),
+      constMeta: kCrateApiBip85ToBase85ConstMeta,
+      argValues: [xprv, length, index],
+      apiImpl: this,
+    ));
+  }
+
+  TaskConstMeta get kCrateApiBip85ToBase85ConstMeta => const TaskConstMeta(
+        debugName: "to_base85",
+        argNames: ["xprv", "length", "index"],
+      );
+
+  @override
+  String crateApiBip85ToHex(
+      {required String xprv, required int length, required int index}) {
+    return handler.executeSync(SyncTask(
+      callFfi: () {
+        final serializer = SseSerializer(generalizedFrbRustBinding);
+        sse_encode_String(xprv, serializer);
+        sse_encode_u_32(length, serializer);
+        sse_encode_u_32(index, serializer);
+        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 4)!;
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_String,
@@ -148,7 +206,7 @@ class LibBip85ApiImpl extends LibBip85ApiImplPlatform implements LibBip85Api {
         sse_encode_String(xprv, serializer);
         sse_encode_u_32(wordCount, serializer);
         sse_encode_u_32(index, serializer);
-        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 3)!;
+        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 5)!;
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_String,
@@ -172,7 +230,7 @@ class LibBip85ApiImpl extends LibBip85ApiImplPlatform implements LibBip85Api {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_String(xprv, serializer);
         sse_encode_u_32(index, serializer);
-        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 4)!;
+        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 6)!;
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_String,
@@ -196,7 +254,7 @@ class LibBip85ApiImpl extends LibBip85ApiImplPlatform implements LibBip85Api {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_String(xprv, serializer);
         sse_encode_u_32(index, serializer);
-        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 5)!;
+        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 7)!;
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_String,

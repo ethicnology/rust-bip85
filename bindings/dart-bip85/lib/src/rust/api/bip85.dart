@@ -23,3 +23,13 @@ String toMnemonic(
         {required String xprv, required int wordCount, required int index}) =>
     LibBip85.instance.api.crateApiBip85ToMnemonic(
         xprv: xprv, wordCount: wordCount, index: index);
+
+String toBase64(
+        {required String xprv, required int length, required int index}) =>
+    LibBip85.instance.api
+        .crateApiBip85ToBase64(xprv: xprv, length: length, index: index);
+
+String toBase85(
+        {required String xprv, required int length, required int index}) =>
+    LibBip85.instance.api
+        .crateApiBip85ToBase85(xprv: xprv, length: length, index: index);

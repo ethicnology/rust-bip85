@@ -37,7 +37,7 @@ flutter_rust_bridge::frb_generated_boilerplate!(
     default_rust_auto_opaque = RustAutoOpaqueMoi,
 );
 pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_VERSION: &str = "2.0.0";
-pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_CONTENT_HASH: i32 = -1756544811;
+pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_CONTENT_HASH: i32 = 1370172147;
 
 // Section: executor
 
@@ -71,6 +71,74 @@ fn wire__crate__api__bip85__derive_impl(
             deserializer.end();
             transform_result_sse::<_, ()>((move || {
                 let output_ok = Result::<_, ()>::Ok(crate::api::bip85::derive(api_xprv, api_path))?;
+                Ok(output_ok)
+            })())
+        },
+    )
+}
+fn wire__crate__api__bip85__to_base64_impl(
+    ptr_: flutter_rust_bridge::for_generated::PlatformGeneralizedUint8ListPtr,
+    rust_vec_len_: i32,
+    data_len_: i32,
+) -> flutter_rust_bridge::for_generated::WireSyncRust2DartSse {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_sync::<flutter_rust_bridge::for_generated::SseCodec, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "to_base64",
+            port: None,
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Sync,
+        },
+        move || {
+            let message = unsafe {
+                flutter_rust_bridge::for_generated::Dart2RustMessageSse::from_wire(
+                    ptr_,
+                    rust_vec_len_,
+                    data_len_,
+                )
+            };
+            let mut deserializer =
+                flutter_rust_bridge::for_generated::SseDeserializer::new(message);
+            let api_xprv = <String>::sse_decode(&mut deserializer);
+            let api_length = <u32>::sse_decode(&mut deserializer);
+            let api_index = <u32>::sse_decode(&mut deserializer);
+            deserializer.end();
+            transform_result_sse::<_, ()>((move || {
+                let output_ok = Result::<_, ()>::Ok(crate::api::bip85::to_base64(
+                    api_xprv, api_length, api_index,
+                ))?;
+                Ok(output_ok)
+            })())
+        },
+    )
+}
+fn wire__crate__api__bip85__to_base85_impl(
+    ptr_: flutter_rust_bridge::for_generated::PlatformGeneralizedUint8ListPtr,
+    rust_vec_len_: i32,
+    data_len_: i32,
+) -> flutter_rust_bridge::for_generated::WireSyncRust2DartSse {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_sync::<flutter_rust_bridge::for_generated::SseCodec, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "to_base85",
+            port: None,
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Sync,
+        },
+        move || {
+            let message = unsafe {
+                flutter_rust_bridge::for_generated::Dart2RustMessageSse::from_wire(
+                    ptr_,
+                    rust_vec_len_,
+                    data_len_,
+                )
+            };
+            let mut deserializer =
+                flutter_rust_bridge::for_generated::SseDeserializer::new(message);
+            let api_xprv = <String>::sse_decode(&mut deserializer);
+            let api_length = <u32>::sse_decode(&mut deserializer);
+            let api_index = <u32>::sse_decode(&mut deserializer);
+            deserializer.end();
+            transform_result_sse::<_, ()>((move || {
+                let output_ok = Result::<_, ()>::Ok(crate::api::bip85::to_base85(
+                    api_xprv, api_length, api_index,
+                ))?;
                 Ok(output_ok)
             })())
         },
@@ -288,10 +356,12 @@ fn pde_ffi_dispatcher_sync_impl(
     // Codec=Pde (Serialization + dispatch), see doc to use other codecs
     match func_id {
         1 => wire__crate__api__bip85__derive_impl(ptr, rust_vec_len, data_len),
-        2 => wire__crate__api__bip85__to_hex_impl(ptr, rust_vec_len, data_len),
-        3 => wire__crate__api__bip85__to_mnemonic_impl(ptr, rust_vec_len, data_len),
-        4 => wire__crate__api__bip85__to_wif_impl(ptr, rust_vec_len, data_len),
-        5 => wire__crate__api__bip85__to_xprv_impl(ptr, rust_vec_len, data_len),
+        2 => wire__crate__api__bip85__to_base64_impl(ptr, rust_vec_len, data_len),
+        3 => wire__crate__api__bip85__to_base85_impl(ptr, rust_vec_len, data_len),
+        4 => wire__crate__api__bip85__to_hex_impl(ptr, rust_vec_len, data_len),
+        5 => wire__crate__api__bip85__to_mnemonic_impl(ptr, rust_vec_len, data_len),
+        6 => wire__crate__api__bip85__to_wif_impl(ptr, rust_vec_len, data_len),
+        7 => wire__crate__api__bip85__to_xprv_impl(ptr, rust_vec_len, data_len),
         _ => unreachable!(),
     }
 }
