@@ -10,3 +10,9 @@
 
 - Publish bip85-extended to crates.io to avoid import issues
 - Update readme
+
+## 1.0.3
+
+- Improve precompiled binaries
+- Bindings for PWD64 and PWD85
+- Update docs
