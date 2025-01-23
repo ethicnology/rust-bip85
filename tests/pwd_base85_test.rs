@@ -3,7 +3,7 @@ use bitcoin::{bip32::Xpriv, key::Secp256k1};
 use std::str::FromStr;
 
 #[test]
-fn test_pwd_base64() {
+fn test_pwd_base85() {
     let root = Xpriv::from_str(
         "xprv9s21ZrQH143K2LBWUUQRFXhucrQqBpKdRRxNVq2zBqsx8HVqFk2uYo8kmbaLLHRdqtQpUm98uKfu3vca1LqdGhUtyoFnCNkfmXRyPXLjbKb",
     )

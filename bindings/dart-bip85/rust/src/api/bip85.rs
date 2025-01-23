@@ -38,3 +38,17 @@ pub fn to_mnemonic(xprv: String, word_count: u32, index: u32) -> String {
     let derived = bip85_extended::to_mnemonic(&Secp256k1::new(), &root, word_count, index).unwrap();
     return derived.to_string();
 }
+
+#[flutter_rust_bridge::frb(sync)]
+pub fn to_base64(xprv: String, length: u32, index: u32) -> String {
+    let root = Xpriv::from_str(&xprv).unwrap();
+    let derived = bip85_extended::to_pwd_base64(&Secp256k1::new(), &root, length, index).unwrap();
+    return derived.to_string();
+}
+
+#[flutter_rust_bridge::frb(sync)]
+pub fn to_base85(xprv: String, length: u32, index: u32) -> String {
+    let root = Xpriv::from_str(&xprv).unwrap();
+    let derived = bip85_extended::to_pwd_base85(&Secp256k1::new(), &root, length, index).unwrap();
+    return derived.to_string();
+}
