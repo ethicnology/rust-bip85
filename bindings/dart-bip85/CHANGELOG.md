@@ -16,3 +16,7 @@
 - Improve precompiled binaries
 - Bindings for PWD64 and PWD85
 - Update docs
+
+## 2.0.0
+
+- Upgrade: flutter_rust_bridge 2.9.0
