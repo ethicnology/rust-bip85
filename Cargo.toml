@@ -24,6 +24,7 @@ italian = ["mnemonic", "bip39/italian"]
 japanese = ["mnemonic", "bip39/japanese"]
 korean = ["mnemonic", "bip39/korean"]
 spanish = ["mnemonic", "bip39/spanish"]
+portuguese = ["mnemonic", "bip39/portuguese"]
 
 all-languages = [
     "mnemonic",
@@ -35,6 +36,7 @@ all-languages = [
     "japanese",
     "korean",
     "spanish",
+    "portuguese",
 ]
 
 [dependencies]

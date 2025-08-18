@@ -46,6 +46,8 @@ pub fn to_mnemonic_in<C: secp256k1::Signing>(
         Language::Italian => 7,
         #[cfg(feature = "czech")]
         Language::Czech => 8,
+        #[cfg(feature = "portuguese")]
+        Language::Portuguese => 9,
     };
     let path = DerivationPath::from(vec![
         BIP39_APPLICATION_NUMBER,
