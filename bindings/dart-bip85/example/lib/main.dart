@@ -1,5 +1,7 @@
+import 'package:bip85/bip85.dart';
 import 'package:flutter/material.dart';
 import 'package:bip85/bip85.dart' as bip85;
+import 'package:collection/collection.dart';
 
 Future<void> main() async {
   await bip85.LibBip85.init(); // mandatory
@@ -14,13 +16,16 @@ class MyApp extends StatelessWidget {
     const xprv =
         "xprv9s21ZrQH143K2LBWUUQRFXhucrQqBpKdRRxNVq2zBqsx8HVqFk2uYo8kmbaLLHRdqtQpUm98uKfu3vca1LqdGhUtyoFnCNkfmXRyPXLjbKb";
 
-    var derived = bip85.toMnemonic(xprv: xprv, wordCount: 12, index: 0);
-    var expected =
-        "girl mad pet galaxy egg matter matrix prison refuse sense ordinary nose";
-    assert(derived == expected);
+    const language = bip85.Language.english;
+    var derivedMnemonic = bip85.toMnemonicIn(
+        xprv: xprv, language: language.label, wordCount: 12, index: 0);
+    var expectedMnemonic = Mnemonic.fromSentence(
+        "girl mad pet galaxy egg matter matrix prison refuse sense ordinary nose",
+        language);
+    assert(ListEquality().equals(derivedMnemonic, expectedMnemonic.words));
 
-    derived = bip85.toWif(xprv: xprv, index: 0);
-    expected = "Kzyv4uF39d4Jrw2W7UryTHwZr1zQVNk4dAFyqE6BuMrMh1Za7uhp";
+    var derived = bip85.toWif(xprv: xprv, index: 0);
+    var expected = "Kzyv4uF39d4Jrw2W7UryTHwZr1zQVNk4dAFyqE6BuMrMh1Za7uhp";
     assert(derived == expected);
 
     derived = bip85.toHex(xprv: xprv, length: 64, index: 0);
@@ -46,7 +51,10 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(title: const Text('flutter_rust_bridge bip85')),
         body: Center(
           child: Text(
-            bip85.toMnemonic(xprv: xprv, wordCount: 12, index: 0),
+            Mnemonic.fromWords(
+              words: bip85.toMnemonic(xprv: xprv, wordCount: 12, index: 0),
+              language: language,
+            ).sentence,
           ),
         ),
       ),

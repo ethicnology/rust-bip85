@@ -1,6 +1,6 @@
 name: bip85
 description: "BIP85 bindings for the Rust-based 'rust-bip85' library, providing Dart utilities to derive and manage hierarchical keys and seeds securely."
-version: 2.0.0
+version: 3.0.0
 homepage: https://github.com/ethicnology/rust-bip85/tree/master/bindings/dart-bip85
 repository: https://github.com/ethicnology/rust-bip85
 

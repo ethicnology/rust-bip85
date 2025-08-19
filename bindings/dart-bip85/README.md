@@ -1,6 +1,6 @@
 # bip85
 
-The [dart-bip85](https://github.com/ethicnology/rust-bip85/tree/master/bindings/dart-bip85) package is a Flutter binding for the [rust-bip85](https://github.com/ethicnology/rust-bip85) which is an updated version of the original [rust-bip85](https://github.com/rikitau/rust-bip85). The original rust-bip85 has been unmaintained since April 2021.
+The [dart-bip85](https://github.com/ethicnology/rust-bip85/tree/master/bindings/dart-bip85) package provides Flutter bindings from the [rust-bip85](https://github.com/ethicnology/rust-bip85) crate.
 
 
 
@@ -33,6 +33,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     const xprv =
         "xprv9s21ZrQH143K2LBWUUQRFXhucrQqBpKdRRxNVq2zBqsx8HVqFk2uYo8kmbaLLHRdqtQpUm98uKfu3vca1LqdGhUtyoFnCNkfmXRyPXLjbKb";
+
+
+    const language = bip85.Language.english;
+    var derived = bip85.toMnemonicIn(
+        xprv: xprv, language: language.label, wordCount: 12, index: 0);
+    var expected =
+        "girl mad pet galaxy egg matter matrix prison refuse sense ordinary nose";
+    assert(derived == expected);
+    assert(bip85.toMnemonic(xprv: xprv, wordCount: 12, index: 0) == expected);
 
     var derived = bip85.toMnemonic(xprv: xprv, wordCount: 12, index: 0);
     var expected =
