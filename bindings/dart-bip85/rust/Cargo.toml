@@ -7,6 +7,6 @@ edition = "2021"
 crate-type = ["cdylib", "staticlib"]
 
 [dependencies]
-bip85_extended = "=1.1.0"
+bip85_extended = { path = "../../..", features = ["all-languages"] }
 flutter_rust_bridge = "=2.9.0"
 hex = "0.4.3"

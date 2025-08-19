@@ -1,5 +1,6 @@
 use std::str::FromStr;
 
+use bip85_extended::bip39::Language;
 use bip85_extended::bitcoin::bip32::{DerivationPath, Xpriv};
 use bip85_extended::bitcoin::secp256k1::Secp256k1;
 
@@ -33,10 +34,32 @@ pub fn to_hex(xprv: String, length: u32, index: u32) -> String {
 }
 
 #[flutter_rust_bridge::frb(sync)]
-pub fn to_mnemonic(xprv: String, word_count: u32, index: u32) -> String {
+pub fn to_mnemonic(xprv: String, word_count: u32, index: u32) -> Vec<String> {
     let root = Xpriv::from_str(&xprv).unwrap();
     let derived = bip85_extended::to_mnemonic(&Secp256k1::new(), &root, word_count, index).unwrap();
-    return derived.to_string();
+    return derived.words().map(|s| s.to_string()).collect();
+}
+
+
+#[flutter_rust_bridge::frb(sync)]
+pub fn to_mnemonic_in(xprv: String, language: String, word_count: u32, index: u32, ) -> Vec<String> {
+    let language = match language.to_lowercase().as_str() {
+        "english" => Language::English,
+        "japanese" => Language::Japanese,
+        "korean" => Language::Korean,
+        "spanish" => Language::Spanish,
+        "chinese-simplified" => Language::SimplifiedChinese,
+        "chinese-traditional" => Language::TraditionalChinese,
+        "french" => Language::French,
+        "italian" => Language::Italian,
+        "czech" => Language::Czech,
+        "portuguese" => Language::Portuguese,
+        _ => Language::English,
+    };
+    
+    let root = Xpriv::from_str(&xprv).unwrap();
+    let derived = bip85_extended::to_mnemonic_in(&Secp256k1::new(), &root, language, word_count, index).unwrap();
+    return derived.words().map(|s| s.to_string()).collect();
 }
 
 #[flutter_rust_bridge::frb(sync)]
