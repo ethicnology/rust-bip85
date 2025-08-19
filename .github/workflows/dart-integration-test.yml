@@ -1,0 +1,28 @@
+name: Dart Integration Test
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  integration-test:
+    runs-on: macos-15
+    
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: dtolnay/rust-toolchain@stable
+
+    - run: rustup target add aarch64-apple-ios
+
+    - name: Install FVM
+      run: |
+        curl -fsSL https://fvm.app/install.sh | bash
+        echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
+
+    - run: cd bindings/dart-bip85 && fvm install
+    - run: cd bindings/dart-bip85/example && fvm flutter pub get
+    - run: cd bindings/dart-bip85/example && fvm flutter test integration_test
+    
