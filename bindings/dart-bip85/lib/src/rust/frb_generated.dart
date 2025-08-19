@@ -67,7 +67,7 @@ class LibBip85
   String get codegenVersion => '2.9.0';
 
   @override
-  int get rustContentHash => 1370172147;
+  int get rustContentHash => 457669416;
 
   static const kDefaultExternalLibraryLoaderConfig =
       ExternalLibraryLoaderConfig(
@@ -89,8 +89,14 @@ abstract class LibBip85Api extends BaseApi {
   String crateApiBip85ToHex(
       {required String xprv, required int length, required int index});
 
-  String crateApiBip85ToMnemonic(
+  List<String> crateApiBip85ToMnemonic(
       {required String xprv, required int wordCount, required int index});
+
+  List<String> crateApiBip85ToMnemonicIn(
+      {required String xprv,
+      required String language,
+      required int wordCount,
+      required int index});
 
   String crateApiBip85ToWif({required String xprv, required int index});
 
@@ -208,7 +214,7 @@ class LibBip85ApiImpl extends LibBip85ApiImplPlatform implements LibBip85Api {
       );
 
   @override
-  String crateApiBip85ToMnemonic(
+  List<String> crateApiBip85ToMnemonic(
       {required String xprv, required int wordCount, required int index}) {
     return handler.executeSync(SyncTask(
       callFfi: () {
@@ -219,7 +225,7 @@ class LibBip85ApiImpl extends LibBip85ApiImplPlatform implements LibBip85Api {
         return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 5)!;
       },
       codec: SseCodec(
-        decodeSuccessData: sse_decode_String,
+        decodeSuccessData: sse_decode_list_String,
         decodeErrorData: null,
       ),
       constMeta: kCrateApiBip85ToMnemonicConstMeta,
@@ -234,13 +240,43 @@ class LibBip85ApiImpl extends LibBip85ApiImplPlatform implements LibBip85Api {
       );
 
   @override
+  List<String> crateApiBip85ToMnemonicIn(
+      {required String xprv,
+      required String language,
+      required int wordCount,
+      required int index}) {
+    return handler.executeSync(SyncTask(
+      callFfi: () {
+        final serializer = SseSerializer(generalizedFrbRustBinding);
+        sse_encode_String(xprv, serializer);
+        sse_encode_String(language, serializer);
+        sse_encode_u_32(wordCount, serializer);
+        sse_encode_u_32(index, serializer);
+        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 6)!;
+      },
+      codec: SseCodec(
+        decodeSuccessData: sse_decode_list_String,
+        decodeErrorData: null,
+      ),
+      constMeta: kCrateApiBip85ToMnemonicInConstMeta,
+      argValues: [xprv, language, wordCount, index],
+      apiImpl: this,
+    ));
+  }
+
+  TaskConstMeta get kCrateApiBip85ToMnemonicInConstMeta => const TaskConstMeta(
+        debugName: "to_mnemonic_in",
+        argNames: ["xprv", "language", "wordCount", "index"],
+      );
+
+  @override
   String crateApiBip85ToWif({required String xprv, required int index}) {
     return handler.executeSync(SyncTask(
       callFfi: () {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_String(xprv, serializer);
         sse_encode_u_32(index, serializer);
-        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 6)!;
+        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 7)!;
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_String,
@@ -264,7 +300,7 @@ class LibBip85ApiImpl extends LibBip85ApiImplPlatform implements LibBip85Api {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_String(xprv, serializer);
         sse_encode_u_32(index, serializer);
-        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 7)!;
+        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 8)!;
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_String,
@@ -285,6 +321,12 @@ class LibBip85ApiImpl extends LibBip85ApiImplPlatform implements LibBip85Api {
   String dco_decode_String(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return raw as String;
+  }
+
+  @protected
+  List<String> dco_decode_list_String(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return (raw as List<dynamic>).map(dco_decode_String).toList();
   }
 
   @protected
@@ -316,6 +358,18 @@ class LibBip85ApiImpl extends LibBip85ApiImplPlatform implements LibBip85Api {
     // Codec=Sse (Serialization based), see doc to use other codecs
     var inner = sse_decode_list_prim_u_8_strict(deserializer);
     return utf8.decoder.convert(inner);
+  }
+
+  @protected
+  List<String> sse_decode_list_String(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    var len_ = sse_decode_i_32(deserializer);
+    var ans_ = <String>[];
+    for (var idx_ = 0; idx_ < len_; ++idx_) {
+      ans_.add(sse_decode_String(deserializer));
+    }
+    return ans_;
   }
 
   @protected
@@ -358,6 +412,15 @@ class LibBip85ApiImpl extends LibBip85ApiImplPlatform implements LibBip85Api {
   void sse_encode_String(String self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_list_prim_u_8_strict(utf8.encoder.convert(self), serializer);
+  }
+
+  @protected
+  void sse_encode_list_String(List<String> self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_32(self.length, serializer);
+    for (final item in self) {
+      sse_encode_String(item, serializer);
+    }
   }
 
   @protected

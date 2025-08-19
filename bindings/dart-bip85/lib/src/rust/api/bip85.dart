@@ -19,10 +19,18 @@ String toHex({required String xprv, required int length, required int index}) =>
     LibBip85.instance.api
         .crateApiBip85ToHex(xprv: xprv, length: length, index: index);
 
-String toMnemonic(
+List<String> toMnemonic(
         {required String xprv, required int wordCount, required int index}) =>
     LibBip85.instance.api.crateApiBip85ToMnemonic(
         xprv: xprv, wordCount: wordCount, index: index);
+
+List<String> toMnemonicIn(
+        {required String xprv,
+        required String language,
+        required int wordCount,
+        required int index}) =>
+    LibBip85.instance.api.crateApiBip85ToMnemonicIn(
+        xprv: xprv, language: language, wordCount: wordCount, index: index);
 
 String toBase64(
         {required String xprv, required int length, required int index}) =>
