@@ -1,3 +1,4 @@
+import 'package:bip85/bip85.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:bip85/bip85.dart' as bip85;
 import 'package:integration_test/integration_test.dart';
@@ -15,7 +16,24 @@ void main() async {
     const expected =
         "girl mad pet galaxy egg matter matrix prison refuse sense ordinary nose";
 
-    expect(derived, expected);
+    expect(derived, equals(expected.split(' ')));
+  });
+
+  group('mnemonic_in', () {
+    for (var language in Language.values) {
+      final name = language.label;
+      test(name, () {
+        final derived = bip85.toMnemonicIn(
+            xprv: xprv, language: name, wordCount: 12, index: 0);
+
+        print(derived);
+
+        expect(
+          derived,
+          equals(Mnemonic.fromWords(words: derived, language: language).words),
+        );
+      });
+    }
   });
 
   test('wif', () {
