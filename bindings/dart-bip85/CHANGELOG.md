@@ -1,9 +1,11 @@
 ## 3.0.0
 
+- Recommend `bip85_entropy` which is compatible with all platforms (dart native) and is more developers friendly instead of this bindings from rust package `bip85_extended`
 - feat: `toMnemonicIn` generates the mnemonic for all the languages available in bip39 spec
 - BREAKING CHANGE: `toMnemonic` return the words of the mnemonic as a `List<String>` instead of a `String` this change is justified by the fact that the `rust-bip39` dependency does not use ideographic spaces instead of ASCII space for japanese mnemonic as expected in the specification/test vectors.
 - ci: integration test in dart
 - refactor: set `fvm` in the repo with flutter `3.35.0`
+
 
 
 ## 2.0.0

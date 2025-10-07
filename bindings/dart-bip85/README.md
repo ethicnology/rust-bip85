@@ -1,6 +1,12 @@
 # bip85
 
-The [dart-bip85](https://github.com/ethicnology/rust-bip85/tree/master/bindings/dart-bip85) package provides Flutter bindings from the [rust-bip85](https://github.com/ethicnology/rust-bip85) crate.
+>**We recommend you to use the package [`bip85_entropy`](https://github.com/ethicnology/dart-bip85-entropy) instead of the current `bip85` package**
+
+> **`bip85_entropy` is written in pure dart, is compatible with all flutter platforms and is more developer friendly**
+
+> `flutter pub add bip85_entropy`
+
+ The current [bip85](https://github.com/ethicnology/rust-bip85/tree/master/bindings/dart-bip85) package provides Flutter bindings from the rust [bip85_extended](https://github.com/ethicnology/rust-bip85) crate.
 
 
 
