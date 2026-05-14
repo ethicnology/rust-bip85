@@ -22,6 +22,7 @@ This work is sponsored by [Bull Bitcoin](https://bullbitcoin.com) [<img
 - [x] [PWD base64](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#user-content-PWD_BASE64)
 - [x] [PWD base85](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#user-content-PWD_BASE85)
 - [ ] [DICE](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#user-content-DICE)
+- [x] [Nostr](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#nostr)
 
 
 ## Flutter bindings
