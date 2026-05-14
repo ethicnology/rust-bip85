@@ -21,4 +21,7 @@ fn main() {
 
     let xprv = bip85_extended::to_xprv(&secp, &root, 0).unwrap();
     println!("Derived extended private key:\n{}", xprv);
+
+    let nsec = bip85_extended::to_nostr(&secp, &root, 1, 1).unwrap();
+    println!("Nostr nsec (identity=1, account=1):\n{}", nsec);
 }
